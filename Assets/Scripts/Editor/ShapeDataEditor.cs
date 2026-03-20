@@ -74,11 +74,13 @@ public class ShapeDataEditor : Editor
 
         //interface for rows of grid
         var rowStyle = new GUIStyle();
-        rowStyle.fixedHeight = 25;
+        rowStyle.fixedHeight = 35;
         rowStyle.alignment = TextAnchor.MiddleCenter;
 
         //interface for boxes that will be filled to create shapes
         var boxStyle = new GUIStyle(EditorStyles.miniButtonMid);
+        boxStyle.fixedWidth = 25;
+        boxStyle.fixedHeight = 25;
         boxStyle.normal.background = Texture2D.grayTexture; //not selected
         boxStyle.onNormal.background = Texture2D.whiteTexture; //selected
 
