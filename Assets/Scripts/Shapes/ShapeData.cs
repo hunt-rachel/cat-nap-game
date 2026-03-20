@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu]
 [System.Serializable]
 
-public class FullShapeData : ScriptableObject 
+public class ShapeData : ScriptableObject 
 {
     [System.Serializable]
     public class Row
@@ -26,7 +26,7 @@ public class FullShapeData : ScriptableObject
         public void CreateRow(int size)
         {
             rowSize = size;
-            column; new bool[rowSize];
+            column = new bool[rowSize];
 
             //clears data to be ready for next row created
             ClearRow();
@@ -44,25 +44,25 @@ public class FullShapeData : ScriptableObject
 
     public int columnCount = 0;
     public int rowCount = 0;
-    public Row[] gameBoard;
+    public Row[] shapeBoard;
 
     //completely clears board of shapes
     public void Clear()
     {
         for(int i = 0; i < rowCount; i++)
         {
-            gameBoard[i].ClearRow();
+            shapeBoard[i].ClearRow();
         }
     }
 
-    //creates a new game board according to number of columns
-    public void CreateGameBoard()
+    //creates a new shape board according to number of columns
+    public void CreateShapeBoard()
     {
-        gameBoard = new Row[rowCount];
+        shapeBoard = new Row[rowCount];
 
         for(int i = 0; i < rowCount; i++)
         {
-            gameBoard[i] = new Row(columnCount);
+            shapeBoard[i] = new Row(columnCount);
         }
     }
 }
