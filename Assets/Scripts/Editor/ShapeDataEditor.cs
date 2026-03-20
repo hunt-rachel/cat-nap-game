@@ -69,7 +69,7 @@ public class ShapeDataEditor : Editor
 
         //header for editor
         var headerColumnStyle = new GUIStyle();
-        headerColumnStyle.fixedWidth = 65;
+        headerColumnStyle.fixedWidth = (35 * sd.columnCount);
         headerColumnStyle.alignment = TextAnchor.MiddleCenter;
 
         //interface for rows of grid
