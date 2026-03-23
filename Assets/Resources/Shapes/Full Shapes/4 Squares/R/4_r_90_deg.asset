@@ -10,9 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 270ddde719f817644bd35bd81b78bf25, type: 3}
-  m_Name: 1_dot
+  m_Name: 4_r_90_deg
   m_EditorClassIdentifier: 
-  columnCount: 1
-  rowCount: 1
+  columnCount: 3
+  rowCount: 3
   shapeBoard:
-  - column: 01
+  - column: 010100
+  - column: 000001
+  - column: 000001
