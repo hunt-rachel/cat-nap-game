@@ -6,15 +6,14 @@ public class Shape : MonoBehaviour
 {
     public GameObject squareShapeImg;
 
-    //[HideInInspector]
+    [HideInInspector]
     public ShapeData currShapeData;
 
     private List<GameObject> currShape = new List<GameObject>();
     
     void Start()
     {
-        //test for method
-        RequestNewShape(currShapeData);
+
     }
 
     //counts number of active squares in current shape
