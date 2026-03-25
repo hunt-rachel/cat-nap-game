@@ -47,7 +47,7 @@ public class GridManager : MonoBehaviour
                 //set square features
                 gridSquaresList[gridSquaresList.Count - 1].transform.localScale = new Vector3(squareScale, squareScale, squareScale);
 
-                gridSquaresList[gridSquaresList.Count - 1].GetComponent<GridSquare>().SetImage(squareIndex % 2 == 0);
+                //gridSquaresList[gridSquaresList.Count - 1].GetComponent<GridSquare>().SetImage(squareIndex % 2 == 0);
                 squareIndex++;
             }
         }
@@ -56,6 +56,7 @@ public class GridManager : MonoBehaviour
     //sets position for spawned squares to create grid
     private void PositionGridSquares()
     {
+        
         //variable definitions
         int colNum = 0;
         int rowNum = 0;
@@ -70,7 +71,6 @@ public class GridManager : MonoBehaviour
         offset.x = squareRect.rect.width * squareRect.transform.localScale.x + squareOffset;
         offset.y = squareRect.rect.height * squareRect.transform.localScale.y + squareOffset;
 
-        //
         foreach(GameObject square in gridSquaresList)
         {
             if(colNum + 1 > columnCount)
@@ -87,14 +87,13 @@ public class GridManager : MonoBehaviour
             float xPosOffset = offset.x * colNum + (gapNumber.x * gapSize);
             float yPosOffset = offset.y * rowNum + (gapNumber.y * gapSize);
 
-            //may need to change % depending on grid size?
-            if(colNum > 0 && colNum % 3 == 0)
+            if (colNum > 0)
             {
                 gapNumber.x++;
                 xPosOffset += gapSize;
             }
 
-            if(rowNum > 0 && rowNum % 3 == 0 && rowMoved == false)
+            if (rowNum > 0 && rowMoved == false)
             {
                 rowMoved = true;
                 gapNumber.y++;

@@ -643,7 +643,7 @@ MonoBehaviour:
   columnCount: 9
   rowCount: 9
   gapSize: 3
-  squareScale: 0.9
+  squareScale: 1
   squareOffset: 0.5
   gridSquare: {fileID: 534884340291759772, guid: b6ec1d90f2dcf444d968ab1e93794b90, type: 3}
   startPos: {x: -850, y: 450}
@@ -693,15 +693,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4811088934898140025, guid: b24307691d7ceca4ba61874fe016ad18, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4811088934898140025, guid: b24307691d7ceca4ba61874fe016ad18, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4811088934898140025, guid: b24307691d7ceca4ba61874fe016ad18, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4811088934898140025, guid: b24307691d7ceca4ba61874fe016ad18, type: 3}
       propertyPath: m_LocalPosition.x
