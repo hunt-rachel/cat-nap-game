@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.UI;
+
 public class GridManager : MonoBehaviour
 {
     //public variables
@@ -56,7 +58,6 @@ public class GridManager : MonoBehaviour
     //sets position for spawned squares to create grid
     private void PositionGridSquares()
     {
-        
         //variable definitions
         int colNum = 0;
         int rowNum = 0;
@@ -102,6 +103,27 @@ public class GridManager : MonoBehaviour
 
             square.GetComponent<RectTransform>().anchoredPosition = new Vector2(startPos.x + xPosOffset, startPos.y - yPosOffset);
             square.GetComponent<RectTransform>().localPosition = new Vector3(startPos.x + xPosOffset, startPos.y - yPosOffset, 0.0f);
+
+            var squareImg = square.transform.Find("Grid Square Image");
+            
+            /*for debugging
+            if(squareImg != null)
+            {
+                Debug.Log("found square image in column " + colNum + " and row " + rowNum);
+            }*/
+
+            //set colours to define edges of grid
+            //if leftmost / rightmost / topmost / bottommost
+            if(colNum == 0 || colNum == columnCount - 1 || rowNum == 0 || rowNum == rowCount - 1)
+            {
+                squareImg.GetComponent<Image>().color = Color.red;
+            }
+
+            else
+            {
+                squareImg.GetComponent<Image>().color = Color.blue;
+            }
+
 
             colNum++;
         }
