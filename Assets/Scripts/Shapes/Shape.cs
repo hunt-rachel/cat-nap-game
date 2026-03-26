@@ -193,7 +193,7 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IBe
 
     public void OnEndDrag(PointerEventData eventData)
     {
-    
+        GameEvents.CheckIfShapePlacable();
     }
 
     public void OnPointerDown(PointerEventData eventData)

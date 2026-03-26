@@ -28,6 +28,16 @@ public class GridManager : MonoBehaviour
         CreateGrid();
     }
 
+    private void OnEnable()
+    {
+        GameEvents.CheckIfShapePlacable += CheckIfShapePlacable;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.CheckIfShapePlacable -= CheckIfShapePlacable;
+    }
+
     private void CreateGrid()
     {
         SpawnGridSquares();
@@ -126,6 +136,19 @@ public class GridManager : MonoBehaviour
 
 
             colNum++;
+        }
+    }
+
+    private void CheckIfShapePlacable()
+    {
+        foreach(var square in gridSquaresList)
+        {
+            var gridSquare = square.GetComponent<GridSquare>();
+
+            if(gridSquare.PlacableHere() == true)
+            {
+                gridSquare.ActivateSquare();
+            }
         }
     }
 }

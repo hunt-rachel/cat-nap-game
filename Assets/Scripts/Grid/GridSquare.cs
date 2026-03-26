@@ -23,6 +23,21 @@ public class GridSquare : MonoBehaviour
         Selected = false;
         SquareOccupied = false;  
     }
+
+    //temp testing function
+    public bool PlacableHere()
+    {
+        return hoverImg.gameObject.activeSelf;
+    }
+
+    public void ActivateSquare()
+    {
+        hoverImg.gameObject.SetActive(false);
+        activeImg.gameObject.SetActive(true);
+
+        Selected = true;
+        SquareOccupied = true;
+    }
     
     public void SetImage(bool setFirstImg)
     {
