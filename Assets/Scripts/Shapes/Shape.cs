@@ -2,18 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shape : MonoBehaviour
+using UnityEngine.EventSystems;
+
+//extra inheritances to help handle moving game shapes
+public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerDownHandler
 {
+    //public vars
     public GameObject squareShapeImg;
+
+    public Vector3 selectedShapeScale;
+
+    //amount shape is above mouse for visibility
+    public Vector2 offset = new Vector2(0f, 300f);
 
     [HideInInspector]
     public ShapeData currShapeData;
 
+    //private vars
     private List<GameObject> currShape = new List<GameObject>();
-    
-    void Start()
-    {
 
+    private Vector3 startScale;
+
+    private RectTransform rt;
+
+    private bool draggable = true;
+
+    private Canvas canvas;
+
+    public void Awake()
+    {
+        rt = this.GetComponent<RectTransform>();
+        startScale = rt.localScale;
+        canvas = GetComponentInParent<Canvas>();
+        draggable = true;
     }
 
     //counts number of active squares in current shape
@@ -139,5 +160,44 @@ public class Shape : MonoBehaviour
         }
 
         return yShift;
+    }
+    
+    //functions required for moving shape in game space
+    public void OnPointerClick(PointerEventData eventData)
+    {
+
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        rt.localScale = selectedShapeScale;
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        rt.anchorMin = new Vector2(0, 0);
+        rt.anchorMax = new Vector2(0, 0);
+        rt.pivot = new Vector2(0, 0);
+
+        //temp value for shape position
+        Vector2 pos;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, eventData.position, Camera.main, out pos);
+
+        rt.localPosition = pos + offset;
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        rt.localScale = startScale;
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+
     }
 }
