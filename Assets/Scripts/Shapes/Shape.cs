@@ -193,7 +193,7 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IBe
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        rt.localScale = startScale;
+    
     }
 
     public void OnPointerDown(PointerEventData eventData)

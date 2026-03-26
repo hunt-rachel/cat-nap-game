@@ -104,7 +104,7 @@ public class GridManager : MonoBehaviour
             square.GetComponent<RectTransform>().anchoredPosition = new Vector2(startPos.x + xPosOffset, startPos.y - yPosOffset);
             square.GetComponent<RectTransform>().localPosition = new Vector3(startPos.x + xPosOffset, startPos.y - yPosOffset, 0.0f);
 
-            var squareImg = square.transform.Find("Grid Square Image");
+            var squareImg = square.transform.Find("Default Image");
             
             /*for debugging
             if(squareImg != null)

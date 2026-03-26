@@ -6,13 +6,42 @@ using UnityEngine.UI;
 
 public class GridSquare : MonoBehaviour
 {
-    public Image squareImg;
+    //public vars
+    public Image defaultImg;
+    public Image hoverImg;
+    public Image activeImg;
 
-    public List<Sprite> squareImages;
+    public List<Sprite> defaultImages;
 
+    public bool Selected { get; set; }
+    public bool SquareOccupied { get; set; }
+
+    public int SquareIndex { get; set; }
+
+    void Start()
+    {
+        Selected = false;
+        SquareOccupied = false;  
+    }
+    
     public void SetImage(bool setFirstImg)
     {
-        squareImg.GetComponent<Image>().sprite = setFirstImg ? squareImages[1] : squareImages[0];
+        defaultImg.GetComponent<Image>().sprite = setFirstImg ? defaultImages[1] : defaultImages[0];
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        hoverImg.gameObject.SetActive(true);
+    }
+
+    void OnTriggerStay2D(Collider2D collision)
+    {
+        hoverImg.gameObject.SetActive(true);
+    }
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        hoverImg.gameObject.SetActive(false);
     }
 
 }
