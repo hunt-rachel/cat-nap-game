@@ -23,18 +23,15 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IBe
 
     private Vector3 startScale;
 
-    private RectTransform rt;
+    //private RectTransform rt;
 
-    private bool draggable = true;
+    //private bool draggable = true;
 
     private Canvas canvas;
 
     public void Awake()
     {
-        rt = this.GetComponent<RectTransform>();
-        startScale = rt.localScale;
-        canvas = GetComponentInParent<Canvas>();
-        draggable = true;
+        startScale = this.transform.localScale;
     }
 
     //counts number of active squares in current shape
@@ -77,10 +74,11 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IBe
             square.gameObject.transform.position = Vector3.zero;
             square.gameObject.SetActive(false);
         }
+        
+        var spre = squareShapeImg.GetComponent<SpriteRenderer>();
 
-        var squareRect = squareShapeImg.GetComponent<RectTransform>();
-        var moveDistance = new Vector2(squareRect.rect.width * squareRect.localScale.x,
-            squareRect.rect.height * squareRect.localScale.y);
+        var moveDistance = new Vector2(spre.bounds.size.x * squareShapeImg.transform.localScale.x,
+            spre.bounds.size.y * squareShapeImg.transform.localScale.y);
 
         int currListIndex = 0;
 
@@ -93,8 +91,7 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IBe
                 if (sd.shapeBoard[row].column[col])
                 {
                     currShape[currListIndex].SetActive(true);
-                    currShape[currListIndex].GetComponent<RectTransform>().localPosition =
-                        new Vector2(GetSquareXPos(sd, col, moveDistance), GetSquareYPos(sd, row, moveDistance));
+                    currShape[currListIndex].transform.localPosition = new Vector2(GetSquareXPos(sd, col, moveDistance), GetSquareYPos(sd, row, moveDistance));
 
                     currListIndex++;
                 }
@@ -107,8 +104,6 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IBe
     {
         //allows squares to move horizontally on the grid while maintaining the same shape
         float xShift = 0f;
-        //int middleSquareIndex;
-        //int mult;
 
         //calculates vertical position
         if(sd.columnCount > 1)
@@ -136,8 +131,6 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IBe
     private float GetSquareYPos(ShapeData sd, int row, Vector2 moveDistance)
     {
         float yShift = 0f;
-        //int middleSquareIndex;
-        //int mult;
 
         //calculates horizontal position
         if (sd.rowCount > 1)
@@ -175,20 +168,15 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IBe
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        rt.localScale = selectedShapeScale;
+        this.transform.localScale = selectedShapeScale;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        rt.anchorMin = new Vector2(0, 0);
-        rt.anchorMax = new Vector2(0, 0);
-        rt.pivot = new Vector2(0, 0);
-
         //temp value for shape position
-        Vector2 pos;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, eventData.position, Camera.main, out pos);
+        Vector2 pos = this.transform.position;
 
-        rt.localPosition = pos + offset;
+        this.transform.position = pos + offset;
     }
 
     public void OnEndDrag(PointerEventData eventData)
