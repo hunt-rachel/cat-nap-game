@@ -73,7 +73,7 @@ ScriptedImporter:
     applyGammaDecoding: 0
   previousAsepriteImporterSettings:
     fileImportMode: 0
-    importHiddenLayers: 0
+    importHiddenLayers: 1
     layerImportMode: 1
     defaultPivotSpace: 0
     defaultPivotAlignment: 7
@@ -86,7 +86,7 @@ ScriptedImporter:
     addShadowCasters: 0
   asepriteImporterSettings:
     fileImportMode: 0
-    importHiddenLayers: 0
+    importHiddenLayers: 1
     layerImportMode: 1
     defaultPivotSpace: 0
     defaultPivotAlignment: 7
@@ -98,7 +98,7 @@ ScriptedImporter:
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 639101371360473015
+  platformSettingsDirtyTick: 639102199096412627
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -133,7 +133,7 @@ ScriptedImporter:
       y: 4
       width: 500
       height: 100
-    spriteID: 3e9345752008f284bb93b4eed478de8b
+    spriteID: 396f91ce06a7e114996c17c4b65a3431
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -154,7 +154,7 @@ ScriptedImporter:
       y: 4
       width: 100
       height: 100
-    spriteID: a80f9104760e4a34c90d943d0a69052e
+    spriteID: 4eff8606f032db546a8ce94ec22afe57
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -174,7 +174,7 @@ ScriptedImporter:
       y: 4
       width: 100
       height: 100
-    spriteID: ce43e9c29e36e1f4090d7b993b4d9f7d
+    spriteID: b083ce608d723b447a444e391aefb673
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -194,7 +194,7 @@ ScriptedImporter:
       y: 4
       width: 100
       height: 100
-    spriteID: 0d20798aad773b94e861a97e07e8f2f5
+    spriteID: c6642b89fe40ae345ab10778e1cdd5d6
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -203,7 +203,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
-  - name: test_canPlace
+  - name: test_hover_canPlace
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -214,7 +214,7 @@ ScriptedImporter:
       y: 4
       width: 100
       height: 100
-    spriteID: 8fa24f153d861314e89e6c290b175efd
+    spriteID: fd525b073c94ebf418f335f966f1491a
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -223,7 +223,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
-  - name: test_cannotPlace
+  - name: test_hover_cannotPlace
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -234,7 +234,7 @@ ScriptedImporter:
       y: 4
       width: 100
       height: 100
-    spriteID: d20b80f35aee3ad4cae41d0c88f88a62
+    spriteID: a6040bce7e14e574c933370be865f459
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -264,7 +264,7 @@ ScriptedImporter:
         y: 0
         width: 500
         height: 100
-      spriteId: 3e9345752008f284bb93b4eed478de8b
+      spriteId: 396f91ce06a7e114996c17c4b65a3431
     linkedCells: []
     parentIndex: -1
   platformSettings:
