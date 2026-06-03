@@ -12,7 +12,7 @@ public class ShapeManager : MonoBehaviour
     private Board board;
     private GameManager gm;
 
-    public GameObject testShape;
+    //public GameObject testShape;
 
     public Vector3Int testStartPos;
 
@@ -26,7 +26,7 @@ public class ShapeManager : MonoBehaviour
 
     void OnMouseDown()
     {
-        Vector3 pos = testShape.transform.position;
+        Vector3 pos = this.transform.position;
         
         screenPoint = Camera.main.WorldToScreenPoint(pos);
         offset = pos - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
@@ -44,16 +44,16 @@ public class ShapeManager : MonoBehaviour
         //maybe remove depending on if it works well
         if(Input.GetMouseButtonUp(1))
         {
-            testShape.transform.Rotate(0.0f, 0.0f, 90.0f, Space.Self);
+            this.transform.Rotate(0.0f, 0.0f, 90.0f, Space.Self);
 
             //reset rotation value if done full spin
-            if(testShape.transform.rotation.eulerAngles.z >= 360.0f)
+            if(this.transform.rotation.eulerAngles.z >= 360.0f)
             {
-                testShape.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
+                this.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
             }
         }
 
-        testShape.transform.position = currPos;
+        this.transform.position = currPos;
     }
 
 
@@ -64,15 +64,18 @@ public class ShapeManager : MonoBehaviour
 
     private void PlaceShape()
     {
-        Vector3 shapePos = testShape.transform.position;
+        Vector3 shapePos = this.transform.position;
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(shapePos);
+
+        List<int> stateXRefs = new List<int>();
+        List<int> stateYRefs = new List<int>();
 
         bool canPlaceShape = true;
         
         //check validity of each child (individual square) of shape
-        for(int i = 0; i < testShape.transform.childCount; i++)
+        for(int i = 0; i < this.transform.childCount; i++)
         {
-            Transform currChild = testShape.transform.GetChild(i);
+            Transform currChild = this.transform.GetChild(i);
             int childXPos = Mathf.RoundToInt(currChild.position.x);
             int childYPos = Mathf.RoundToInt(currChild.position.y);
 
@@ -80,12 +83,16 @@ public class ShapeManager : MonoBehaviour
             int currStateXRef = Math.Abs(childXPos + gm.stateRefXOffset);
             int currStateYRef = Math.Abs(childYPos + gm.stateRefYOffset);
 
+            //Debug.Log("curr reference indexes for state are x: " + currStateXRef + ", y: " + currStateYRef);
+
+            //if picked up but placed outside of grid, cannot place shape
+            if(currStateXRef > gm.width || currStateXRef < 0 || currStateYRef > gm.height || currStateYRef < 0)
+            {
+                canPlaceShape = false;
+                break;
+            }
+
             Cell currCell = gm.state[currStateXRef,currStateYRef];
-
-            //Debug.Log("current cell pos is: x: " + childXPos + ", y: " + childYPos);
-            //Debug.Log("referece in state should be: " + Math.Abs(childXPos + gm.stateRefXOffset) + ", " + Math.Abs(childYPos + gm.stateRefYOffset));
-
-            //Debug.Log("curr cell type is: " + currCell.type);
 
             //player tried to place shape in invalid space
             if(currCell.type != Cell.Type.Empty)
@@ -94,6 +101,11 @@ public class ShapeManager : MonoBehaviour
                 break;
             }
 
+            else
+            {
+                stateXRefs.Add(currStateXRef);
+                stateYRefs.Add(currStateYRef);
+            }
         }
 
         if(canPlaceShape)
@@ -102,12 +114,21 @@ public class ShapeManager : MonoBehaviour
             int snapX = Mathf.RoundToInt(shapePos.x);
             int snapY = Mathf.RoundToInt(shapePos.y);
 
-            testShape.transform.position = new Vector3(snapX, snapY, screenPoint.z);
+            this.transform.position = new Vector3(snapX, snapY, screenPoint.z);
+
+            for (int i = 0; i < stateXRefs.Count; i++)
+            {
+                //Debug.Log("state index used is x: " + stateXRefs[i] + ", y: " + stateYRefs[i]);
+                gm.state[stateXRefs[i], stateYRefs[i]].filled = true;
+                gm.state[stateXRefs[i], stateYRefs[i]].type = Cell.Type.Filled;
+            }
+            
+            board.DrawBoard(gm.state);
         }
 
         else
         {
-            testShape.transform.position = testStartPos;
+            this.transform.position = testStartPos;
         }
     }
 }

@@ -4,8 +4,8 @@ using UnityEngine.Tilemaps;
 public class GameManager : MonoBehaviour
 {
     //default board size, can be changed in inspector. includes edge rows and cols
-    public int width = 7;
-    public int height = 7;
+    public int width;
+    public int height;
 
     public Tilemap tilemap;
 
@@ -15,8 +15,6 @@ public class GameManager : MonoBehaviour
     //for accessing a cell's position in 2d array compared to placed shape's transform
     public int stateRefXOffset = 10;
     public int stateRefYOffset = -5;
-
-
 
     public bool gameOver; //bool for when no more actions can be taken in game
     public bool canPlaceShape = true; //when false, game over
