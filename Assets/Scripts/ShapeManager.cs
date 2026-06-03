@@ -25,6 +25,18 @@ public class ShapeManager : MonoBehaviour
 
         Vector3 currPos = Camera.main.ScreenToWorldPoint(currPoint) + offset;
 
+        //maybe remove depending on if it works well
+        if(Input.GetMouseButtonUp(1))
+        {
+            testShape.transform.Rotate(0.0f, 0.0f, 90.0f, Space.Self);
+
+            //reset rotation value if done full spin
+            if(testShape.transform.rotation.eulerAngles.z >= 360.0f)
+            {
+                testShape.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
+            }
+        }
+
         testShape.transform.position = currPos;
     }
 
