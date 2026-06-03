@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
                 cell.type = Cell.Type.Empty; //instantaite cell as empty, so can set type according to state
 
                 state[x, y] = cell;
-                Debug.Log("generated cell at pos x: " + x + ", y: " + y);
+                //Debug.Log("generated cell at pos x: " + x + ", y: " + y);
             }
         }
     }
