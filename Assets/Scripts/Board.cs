@@ -30,13 +30,13 @@ public class Board : MonoBehaviour
             for(int y = 0; y < height; y++)
             {
                 Cell cell = state[x, y];
-                tilemap.SetTile(cell.pos, GetTileType(cell, x, y, width, height));
+                tilemap.SetTile(cell.pos, GetTileType(cell));
             }
         }
     }
 
     //return what tile type to display when game board is drawn
-    private Tile GetTileType(Cell cell, int x, int y, int w, int h)
+    private Tile GetTileType(Cell cell)
     {
         //filled cell - shape has been placed over tile
         if(cell.filled)
@@ -45,7 +45,7 @@ public class Board : MonoBehaviour
         }
 
         //edge cell - always filled, but can't place shapes over it
-        else if(x == 0 || x == w - 1 || y == 0 || y == h - 1)
+        else if(cell.isEdge)
         {
             return tileEdge;
         }

@@ -11,7 +11,11 @@ public class GameManager : MonoBehaviour
 
     private Board board;
 
-    private Cell[,] state;
+    [SerializeField] public Cell[,] state;
+    //for accessing a cell's position in 2d array compared to placed shape's transform
+    public int stateRefXOffset = 10;
+    public int stateRefYOffset = -5;
+
 
 
     public bool gameOver; //bool for when no more actions can be taken in game
@@ -65,15 +69,26 @@ public class GameManager : MonoBehaviour
             {
                 Cell cell = new Cell(); //create cell reference
                 cell.pos = new Vector3Int(x, y, 0); //set cell position on game grid
-                cell.type = Cell.Type.Empty; //instantaite cell as empty, so can set type according to state
+                
+                //set edges on instantiation
+                if(x == 0 || x == width - 1 || y == 0 || y == height - 1)
+                {
+                    cell.type = Cell.Type.Edge;
+                    cell.isEdge = true;
+                    //Debug.Log("cell should be edge. cell type: " + cell.type);
+                }
+
+                else
+                {
+                    cell.type = Cell.Type.Empty; //instantaite cell as empty, so can be filled when shapes are placed
+                    //Debug.Log("not an edge. cell type: " + cell.type);
+                }
 
                 state[x, y] = cell;
                 //Debug.Log("generated cell at pos x: " + x + ", y: " + y);
             }
         }
     }
-
-    /* POTENTIALLY RELEVANT METHODS FOR WHEN IT COMES TO BOARD CLEARING
     
     //check whether cell is valid & within bounds of the board
     private bool IsValidCell(int x, int y)
@@ -82,16 +97,17 @@ public class GameManager : MonoBehaviour
     }
     
     //method to return cell type at certain position
-    private Cell GetCell(int x, int y)
+    public Cell GetCell(int x, int y)
     {
         if(IsValidCell(x,y))
         {
-            return state[x,y]
+            return state[x, y];
         }
 
         else
         {
+            Debug.Log("not a valid cell");
             return new Cell();
         }
-    }*/
+    }
 }

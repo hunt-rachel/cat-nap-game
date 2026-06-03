@@ -1,5 +1,8 @@
 using UnityEngine;
+using System;
+using System.Collections.Generic;
 
+[Serializable]
 public struct Cell
 {
     public enum Type
@@ -14,4 +17,5 @@ public struct Cell
     public Type type;
 
     public bool filled;
+    public bool isEdge;
 }
