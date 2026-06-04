@@ -26,7 +26,7 @@ public class Shape : MonoBehaviour
         gm = GameObject.Find("Game Board Grid").GetComponent<GameManager>();
         //if (gm) { Debug.Log("found the game manager script"); }
 
-        sm = GameObject.Find("Shapes To Place").GetComponent<ShapeManager>();
+        sm = GameObject.Find("Shapes Manager").GetComponent<ShapeManager>();
         //if (sm) { Debug.Log("found shape manager"); }
     }
 

@@ -8,9 +8,14 @@ public class ShapeManager : MonoBehaviour
     public Vector3Int[] startingShapePositions;
 
     public List<GameObject> playableShapes; //shapes that can be played from the start of the game
-    public List<GameObject> hardShapes; //shapes that will be added to playable shapes once player reaches certain score
+    public List<GameObject> hardPlayableShapes; //shapes that will be added to playable shapes once player reaches certain score
 
-    public List<GameObject> currShapes;
+    public List<GameObject> currPlayableShapes;
+
+    public List<GameObject> emptySpaces; //shapes that are the negative space the players must try and make borders around
+    public List<GameObject> hardEmptySpaces; //shapes that will be added to empty spaces once player reaches a certain score
+
+    public GameObject currEmptySpace; //the current negative space the player must try and make a border around
 
     void Awake()
     {
