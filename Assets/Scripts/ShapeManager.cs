@@ -16,6 +16,7 @@ public class ShapeManager : MonoBehaviour
     public List<GameObject> hardEmptySpaces; //shapes that will be added to empty spaces once player reaches a certain score
 
     public GameObject currEmptySpace; //the current negative space the player must try and make a border around
+    public Vector3Int emptySpaceDisplayPos; //where to display the visualisation of the shape the player needs to make 
 
     void Awake()
     {
@@ -25,7 +26,7 @@ public class ShapeManager : MonoBehaviour
     void Update()
     {
         //if no more playable shapes on screen, instantiate three more for player
-        if(currShapes.Count == 0)
+        if(currPlayableShapes.Count == 0)
         {
             SetShapes();
         }
@@ -53,7 +54,17 @@ public class ShapeManager : MonoBehaviour
             newShape.GetComponent<Shape>().startPos = startingShapePositions[i];
             newShape.GetComponent<Shape>().SetShapeFeatures();
 
-            currShapes.Add(newShape);
+            currPlayableShapes.Add(newShape);
         }
+    }
+
+    private void SetEmptySpace()
+    {
+        currEmptySpace = emptySpaces[Random.Range(0, emptySpaces.Count - 1)];
+
+        Instantiate(currEmptySpace);
+
+        //TODO: make game object instance for display, and set position
+
     }
 }

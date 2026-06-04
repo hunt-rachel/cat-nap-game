@@ -102,7 +102,7 @@ public class Shape : MonoBehaviour
             board.DrawBoard(gm.state);
 
             //remove from current shapes list
-            sm.currShapes.Remove(this.gameObject);
+            sm.currPlayableShapes.Remove(this.gameObject);
 
             //get rid of block once placed
             Destroy(this.gameObject);

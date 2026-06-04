@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 284369012}
   - component: {fileID: 284369013}
   m_Layer: 0
-  m_Name: Shapes To Place
+  m_Name: Shapes Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -180,14 +180,13 @@ MonoBehaviour:
   - {fileID: 839584342760731446, guid: 3f20e4290e7122749a72d15ef5a7ffc3, type: 3}
   - {fileID: 839584342760731446, guid: 8b9fe6167836a854fb37963464cafdf6, type: 3}
   - {fileID: 839584342760731446, guid: f00bbda0723571a46a40cd8dea94d7cb, type: 3}
-  hardShapes:
-  - {fileID: 839584342760731446, guid: 1227854aac949f348b558aaa38a17b98, type: 3}
-  - {fileID: 839584342760731446, guid: a044e8697cae7c448a55056f5bff8d80, type: 3}
-  - {fileID: 839584342760731446, guid: 2e37d1cef866f68468146883dd09d7f0, type: 3}
-  - {fileID: 839584342760731446, guid: 9193b5dc79abe9942915a15ff8abf5f0, type: 3}
-  - {fileID: 839584342760731446, guid: 32705191c15e1114490f01cd26298265, type: 3}
-  - {fileID: 839584342760731446, guid: 3ac264d31fe171548907380621ecf168, type: 3}
-  currShapes: []
+  hardPlayableShapes: []
+  currPlayableShapes: []
+  emptySpaces:
+  - {fileID: 839584342760731446, guid: 6e2315d42c922b7428ab9651d9e5926b, type: 3}
+  hardEmptySpaces: []
+  currEmptySpace: {fileID: 0}
+  emptySpaceDisplayPos: {x: 0, y: 0, z: 0}
 --- !u!1 &319617077
 GameObject:
   m_ObjectHideFlags: 0
