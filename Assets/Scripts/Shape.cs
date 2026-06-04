@@ -11,6 +11,7 @@ public class Shape : MonoBehaviour
 
     private Board board;
     private GameManager gm;
+    private ShapeManager sm;
 
     public Vector3Int startPos;
 
@@ -24,6 +25,9 @@ public class Shape : MonoBehaviour
         //if (board) { Debug.Log("found the board"); }
         gm = GameObject.Find("Game Board Grid").GetComponent<GameManager>();
         //if (gm) { Debug.Log("found the game manager script"); }
+
+        sm = GameObject.Find("Shapes To Place").GetComponent<ShapeManager>();
+        if (sm) { Debug.Log("found shape manager"); }
     }
 
     public void SetShapeFeatures()
@@ -59,12 +63,6 @@ public class Shape : MonoBehaviour
         if(Input.GetMouseButtonUp(1))
         {
             this.transform.Rotate(0.0f, 0.0f, -90.0f, Space.Self);
-
-            //reset rotation value if done full spin
-            /*if(this.transform.rotation.eulerAngles.z >= 360.0f)
-            {
-                this.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
-            }*/
         }
 
         this.transform.position = currPos;
@@ -102,7 +100,10 @@ public class Shape : MonoBehaviour
             }
             
             board.DrawBoard(gm.state);
-            
+
+            //remove from current shapes list
+            sm.currShapes.Remove(this.gameObject);
+
             //get rid of block once placed
             Destroy(this.gameObject);
         }

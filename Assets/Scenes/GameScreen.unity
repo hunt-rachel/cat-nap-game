@@ -189,6 +189,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 284369012}
+  - component: {fileID: 284369013}
   m_Layer: 0
   m_Name: Shapes To Place
   m_TagString: Untagged
@@ -214,6 +215,43 @@ Transform:
   - {fileID: 1381500201}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &284369013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 284369011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d87d5e11d5dcda244a2881097ac55262, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingShapePositions:
+  - {x: 15, y: 9, z: 0}
+  - {x: 15, y: 5, z: 0}
+  - {x: 15, y: 1, z: 0}
+  playableShapes:
+  - {fileID: 839584342760731446, guid: 706d7e104b737614c8728b669be916b8, type: 3}
+  - {fileID: 839584342760731446, guid: e03222e76870177499b3e446263a4000, type: 3}
+  - {fileID: 839584342760731446, guid: a17a01f816882d141b0d2a744c65bfb2, type: 3}
+  - {fileID: 839584342760731446, guid: 97ec8037bd2d8eb46a5911cc058e3c1f, type: 3}
+  - {fileID: 839584342760731446, guid: eccc29606dff33747b4f1bbc8c0792ac, type: 3}
+  - {fileID: 839584342760731446, guid: ad9fcce79f298554282ea1e71c1e57fe, type: 3}
+  - {fileID: 839584342760731446, guid: c27470471f1406b47b155da8fd8a8163, type: 3}
+  - {fileID: 839584342760731446, guid: 42dc6458c427a99428a678016a8a6907, type: 3}
+  - {fileID: 839584342760731446, guid: 42e2a244c9d0b8140ac6b7a2f875e028, type: 3}
+  - {fileID: 839584342760731446, guid: 3f20e4290e7122749a72d15ef5a7ffc3, type: 3}
+  - {fileID: 839584342760731446, guid: 8b9fe6167836a854fb37963464cafdf6, type: 3}
+  - {fileID: 839584342760731446, guid: f00bbda0723571a46a40cd8dea94d7cb, type: 3}
+  hardShapes:
+  - {fileID: 839584342760731446, guid: 1227854aac949f348b558aaa38a17b98, type: 3}
+  - {fileID: 839584342760731446, guid: a044e8697cae7c448a55056f5bff8d80, type: 3}
+  - {fileID: 839584342760731446, guid: 2e37d1cef866f68468146883dd09d7f0, type: 3}
+  - {fileID: 839584342760731446, guid: 9193b5dc79abe9942915a15ff8abf5f0, type: 3}
+  - {fileID: 839584342760731446, guid: 32705191c15e1114490f01cd26298265, type: 3}
+  - {fileID: 839584342760731446, guid: 3ac264d31fe171548907380621ecf168, type: 3}
+  currShapes: []
 --- !u!1 &319617077
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,11 +287,6 @@ MonoBehaviour:
   tilemap: {fileID: 2056839126}
   gameOver: 0
   canPlaceShape: 1
-  startingShapePositions:
-  - {x: 13, y: 9, z: 0}
-  - {x: 13, y: 5, z: 0}
-  - {x: 13, y: 1, z: 0}
-  shapesToPlaceHolder: {fileID: 284369011}
 --- !u!156049354 &319617079
 Grid:
   m_ObjectHideFlags: 0
