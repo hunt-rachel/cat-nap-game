@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class ShapeManager : MonoBehaviour
+public class Shape : MonoBehaviour
 {
     private Vector3 screenPoint;
     private Vector3 offset;
@@ -12,9 +12,11 @@ public class ShapeManager : MonoBehaviour
     private Board board;
     private GameManager gm;
 
-    //public GameObject testShape;
+    public Vector3Int startPos;
 
-    public Vector3Int testStartPos;
+    //TODO: replace with random background + select colour from colour pallete once artwork underway
+    public Sprite squareSprite;
+    public Color shapeColour;
 
     private void Awake()
     {
@@ -22,6 +24,20 @@ public class ShapeManager : MonoBehaviour
         //if (board) { Debug.Log("found the board"); }
         gm = GameObject.Find("Game Board Grid").GetComponent<GameManager>();
         //if (gm) { Debug.Log("found the game manager script"); }
+    }
+
+    public void SetShapeFeatures()
+    {
+        for (int i = 0; i < this.transform.childCount; i++)
+        {
+            SpriteRenderer childSpre = this.transform.GetChild(i).gameObject.GetComponent<SpriteRenderer>();
+            //if (childSpre) { Debug.Log("found sprite renderer of child " + i); }
+
+            childSpre.sprite = squareSprite;
+            childSpre.color = shapeColour;
+        }
+
+        this.transform.position = startPos;
     }
 
     void OnMouseDown()
@@ -54,7 +70,6 @@ public class ShapeManager : MonoBehaviour
         this.transform.position = currPos;
     }
 
-
     void OnMouseUp()
     {
         PlaceShape();
@@ -67,38 +82,7 @@ public class ShapeManager : MonoBehaviour
 
         List<Cell> cellsToFill = new List<Cell>();
 
-        bool canPlaceShape = true;
-        
-        //check validity of each child (individual square) of shape
-        for(int i = 0; i < this.transform.childCount; i++)
-        {
-            Transform currChild = this.transform.GetChild(i);
-            int childXPos = Mathf.RoundToInt(currChild.position.x) - 1;
-            int childYPos = Mathf.RoundToInt(currChild.position.y) - 1;
-
-            //Debug.Log((childXPos) + " and " + (childYPos));
-
-            //if picked up but placed outside of grid, cannot place shape
-            if(childXPos > gm.width || childXPos < 0 || childYPos > gm.height || childYPos < 0)
-            {
-                canPlaceShape = false;
-                break;
-            }
-
-            Cell currCell = gm.state[childXPos,childYPos];
-
-            //player tried to place shape in invalid space
-            if(currCell.type != Cell.Type.Empty)
-            {
-                canPlaceShape = false;
-                break;
-            }
-
-            else
-            {
-                cellsToFill.Add(currCell);
-            }
-        }
+        bool canPlaceShape = CheckShapePlacement(cellsToFill);
 
         if(canPlaceShape)
         {
@@ -125,7 +109,41 @@ public class ShapeManager : MonoBehaviour
 
         else
         {
-            this.transform.position = testStartPos;
+            this.transform.position = startPos;
         }
+    }
+
+    private bool CheckShapePlacement(List<Cell> l)
+    {
+        //check validity of each child (individual square) of shape
+        for (int i = 0; i < this.transform.childCount; i++)
+        {
+            Transform currChild = this.transform.GetChild(i);
+            int childXPos = Mathf.RoundToInt(currChild.position.x) - 1;
+            int childYPos = Mathf.RoundToInt(currChild.position.y) - 1;
+
+            //Debug.Log((childXPos) + " and " + (childYPos));
+
+            //if picked up but placed outside of grid, cannot place shape
+            if (childXPos > gm.width || childXPos < 0 || childYPos > gm.height || childYPos < 0)
+            {
+                return false;
+            }
+
+            Cell currCell = gm.state[childXPos, childYPos];
+
+            //player tried to place shape in invalid space
+            if (currCell.type != Cell.Type.Empty)
+            {
+                return false;
+            }
+
+            else
+            {
+                l.Add(currCell);
+            }
+        }
+
+        return true;
     }
 }

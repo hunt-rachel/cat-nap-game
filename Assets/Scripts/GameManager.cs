@@ -20,11 +20,21 @@ public class GameManager : MonoBehaviour
     public bool gameOver; //bool for when no more actions can be taken in game
     public bool canPlaceShape = true; //when false, game over
 
+    public Vector3Int[] startingShapePositions;
+    public GameObject shapesToPlaceHolder;
+
     //TODO: add game ui reference here when needed
 
     private void Awake()
     {
         board = GetComponentInChildren<Board>();
+
+        for(int i = 0; i < shapesToPlaceHolder.transform.childCount; i++)
+        {
+            Shape s = shapesToPlaceHolder.transform.GetChild(i).gameObject.GetComponent<Shape>();
+            s.startPos = startingShapePositions[i];
+            s.SetShapeFeatures();
+        }
     }
 
     private void Start()
