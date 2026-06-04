@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ShapeManager : MonoBehaviour
 {
+    //TODO: make neater starting positions for shapes
     public Vector3Int[] startingShapePositions;
 
     public List<GameObject> playableShapes; //shapes that can be played from the start of the game

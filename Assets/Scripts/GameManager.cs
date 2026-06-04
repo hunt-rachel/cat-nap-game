@@ -12,10 +12,6 @@ public class GameManager : MonoBehaviour
     private Board board;
 
     [SerializeField] public Cell[,] state;
-    
-    //for accessing a cell's position in 2d array compared to placed shape's transform
-    //public int stateRefXOffset;
-    //public int stateRefYOffset;
 
     public bool gameOver; //bool for when no more actions can be taken in game
     public bool canPlaceShape = true; //when false, game over
