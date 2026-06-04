@@ -30,8 +30,6 @@ public class ShapeManager : MonoBehaviour
         
         screenPoint = Camera.main.WorldToScreenPoint(pos);
         offset = pos - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
-
-        testStartPos = new Vector3Int(3, 0, 0);
     }
 
     void OnMouseDrag()
@@ -44,13 +42,13 @@ public class ShapeManager : MonoBehaviour
         //maybe remove depending on if it works well
         if(Input.GetMouseButtonUp(1))
         {
-            this.transform.Rotate(0.0f, 0.0f, 90.0f, Space.Self);
+            this.transform.Rotate(0.0f, 0.0f, -90.0f, Space.Self);
 
             //reset rotation value if done full spin
-            if(this.transform.rotation.eulerAngles.z >= 360.0f)
+            /*if(this.transform.rotation.eulerAngles.z >= 360.0f)
             {
                 this.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
-            }
+            }*/
         }
 
         this.transform.position = currPos;
@@ -67,8 +65,7 @@ public class ShapeManager : MonoBehaviour
         Vector3 shapePos = this.transform.position;
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(shapePos);
 
-        List<int> stateXRefs = new List<int>();
-        List<int> stateYRefs = new List<int>();
+        List<Cell> cellsToFill = new List<Cell>();
 
         bool canPlaceShape = true;
         
@@ -76,23 +73,19 @@ public class ShapeManager : MonoBehaviour
         for(int i = 0; i < this.transform.childCount; i++)
         {
             Transform currChild = this.transform.GetChild(i);
-            int childXPos = Mathf.RoundToInt(currChild.position.x);
-            int childYPos = Mathf.RoundToInt(currChild.position.y);
+            int childXPos = Mathf.RoundToInt(currChild.position.x) - 1;
+            int childYPos = Mathf.RoundToInt(currChild.position.y) - 1;
 
-            //get reference to current cell with correct indices for state 2D array
-            int currStateXRef = Math.Abs(childXPos + gm.stateRefXOffset);
-            int currStateYRef = Math.Abs(childYPos + gm.stateRefYOffset);
-
-            //Debug.Log("curr reference indexes for state are x: " + currStateXRef + ", y: " + currStateYRef);
+            //Debug.Log((childXPos) + " and " + (childYPos));
 
             //if picked up but placed outside of grid, cannot place shape
-            if(currStateXRef > gm.width || currStateXRef < 0 || currStateYRef > gm.height || currStateYRef < 0)
+            if(childXPos > gm.width || childXPos < 0 || childYPos > gm.height || childYPos < 0)
             {
                 canPlaceShape = false;
                 break;
             }
 
-            Cell currCell = gm.state[currStateXRef,currStateYRef];
+            Cell currCell = gm.state[childXPos,childYPos];
 
             //player tried to place shape in invalid space
             if(currCell.type != Cell.Type.Empty)
@@ -103,8 +96,7 @@ public class ShapeManager : MonoBehaviour
 
             else
             {
-                stateXRefs.Add(currStateXRef);
-                stateYRefs.Add(currStateYRef);
+                cellsToFill.Add(currCell);
             }
         }
 
@@ -116,14 +108,19 @@ public class ShapeManager : MonoBehaviour
 
             this.transform.position = new Vector3(snapX, snapY, screenPoint.z);
 
-            for (int i = 0; i < stateXRefs.Count; i++)
+            for (int i = 0; i < cellsToFill.Count; i++)
             {
-                //Debug.Log("state index used is x: " + stateXRefs[i] + ", y: " + stateYRefs[i]);
-                gm.state[stateXRefs[i], stateYRefs[i]].filled = true;
-                gm.state[stateXRefs[i], stateYRefs[i]].type = Cell.Type.Filled;
+                int stateX = cellsToFill[i].pos.x;
+                int stateY = cellsToFill[i].pos.y;
+
+                gm.state[stateX, stateY].filled = true;
+                gm.state[stateX, stateY].type = Cell.Type.Filled;
             }
             
             board.DrawBoard(gm.state);
+            
+            //get rid of block once placed
+            Destroy(this.gameObject);
         }
 
         else

@@ -12,9 +12,10 @@ public class GameManager : MonoBehaviour
     private Board board;
 
     [SerializeField] public Cell[,] state;
+    
     //for accessing a cell's position in 2d array compared to placed shape's transform
-    public int stateRefXOffset = 10;
-    public int stateRefYOffset = -5;
+    //public int stateRefXOffset;
+    //public int stateRefYOffset;
 
     public bool gameOver; //bool for when no more actions can be taken in game
     public bool canPlaceShape = true; //when false, game over
@@ -67,6 +68,7 @@ public class GameManager : MonoBehaviour
             {
                 Cell cell = new Cell(); //create cell reference
                 cell.pos = new Vector3Int(x, y, 0); //set cell position on game grid
+                //Debug.Log("cell pos at x: " + x + ", y: " + y + " is " + cell.pos);
                 
                 //set edges on instantiation
                 if(x == 0 || x == width - 1 || y == 0 || y == height - 1)

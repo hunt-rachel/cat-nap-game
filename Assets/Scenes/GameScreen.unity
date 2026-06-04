@@ -238,8 +238,8 @@ MonoBehaviour:
   width: 10
   height: 10
   tilemap: {fileID: 2056839126}
-  stateRefXOffset: 10
-  stateRefYOffset: -5
+  stateRefXOffset: 0
+  stateRefYOffset: 0
   gameOver: 0
   canPlaceShape: 1
 --- !u!156049354 &319617079
@@ -590,8 +590,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb7e4063beb5e894499a90029a0ea1b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testShape: {fileID: 773303182}
-  testStartPos: {x: 0, y: 0, z: 0}
+  testStartPos: {x: 3, y: 0, z: 0}
 --- !u!4 &773303184
 Transform:
   m_ObjectHideFlags: 0
