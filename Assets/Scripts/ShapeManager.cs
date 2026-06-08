@@ -9,11 +9,13 @@ public class ShapeManager : MonoBehaviour
 
     public List<GameObject> playableShapes; //shapes that can be played from the start of the game
     public List<GameObject> hardPlayableShapes; //shapes that will be added to playable shapes once player reaches certain score
+    public GameObject playableShapesHolder;
 
     public List<GameObject> currPlayableShapes;
 
     public List<GameObject> emptySpaces; //shapes that are the negative space the players must try and make borders around
     public List<GameObject> hardEmptySpaces; //shapes that will be added to empty spaces once player reaches a certain score
+    public GameObject emptySpaceHolder;
 
     public GameObject currEmptySpace; //the current negative space the player must try and make a border around
     public Vector3Int emptySpaceDisplayPos; //where to display the visualisation of the shape the player needs to make 
@@ -31,6 +33,12 @@ public class ShapeManager : MonoBehaviour
 
     public void SetShapes()
     {
+        //clear current playable shapes (if any) to allow for new ones
+        foreach(Transform child in playableShapesHolder.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        
         //get unique random indexes to select shapes for player
         List<int> randIndices = new List<int>();
 
@@ -46,7 +54,7 @@ public class ShapeManager : MonoBehaviour
         
         for(int i = 0; i < 3; i++)
         {
-            GameObject newShape = Instantiate(playableShapes[randIndices[i]]);
+            GameObject newShape = Instantiate(playableShapes[randIndices[i]], playableShapesHolder.transform);
 
             newShape.GetComponent<Shape>().startPos = startingShapePositions[i];
             newShape.GetComponent<Shape>().SetShapeFeatures();
@@ -57,10 +65,16 @@ public class ShapeManager : MonoBehaviour
 
     public void SetEmptySpace()
     {
+        //clear current empty space (if any) to allow for new one
+        //clear current playable shapes (if any) to allow for new ones
+        foreach (Transform child in emptySpaceHolder.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
         currEmptySpace = emptySpaces[Random.Range(0, emptySpaces.Count - 1)];
 
-        //TODO: make game object instance for display, and set position
-        GameObject emptyToMake = Instantiate(currEmptySpace);
+        GameObject emptyToMake = Instantiate(currEmptySpace, emptySpaceHolder.transform);
         emptyToMake.transform.position = emptySpaceDisplayPos;
 
     }

@@ -83,6 +83,8 @@ public class Shape : MonoBehaviour
         {
             Debug.Log("empty space not made");
         }
+
+        //TODO: use method to check if current empty space can be made at any point on board, if not, game over
     }
 
     private void PlaceShape()

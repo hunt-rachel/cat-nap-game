@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour
 
         board.DrawBoard(state);
 
+        //TODO: fix placeable shape generation when new game started by player
         //clear current shapes to place on board if any
         if(sm.currPlayableShapes.Count > 0)
         {
@@ -118,13 +119,65 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //checks relevant shape for empty space exists on board, no point checking for border if this doesn't exist
+    //return amount of empty cells checked before path broken
+    public int CountSpacePath(EmptySpace es, int x, int y)
+    {
+        int returnInt = 0;
+
+        foreach(Vector2Int currEmptyPoint in es.spacePath)
+        {
+            int tempX = x + currEmptyPoint.x;
+            int tempY = y + currEmptyPoint.y;
+
+            //if current point in empty space check is filled, empty shape cannot be made from current point
+            if (state[tempX,tempY].type != Cell.Type.Empty)
+            {
+                //Debug.Log("current cell type: " + state[tempX, tempY].type);
+                //Debug.Log("there is a break in the empty space shape at position x: " + tempX + ", y: " + tempY);
+                break;
+            }
+
+            //Debug.Log("cell at position x: " + tempX + ", y: " + tempY + " is edge? " + state[tempX, tempY].isEdge + ", is filled? " + state[tempX, tempY].filled);
+            returnInt++;
+        }
+        
+        return returnInt;
+    }
+
+    //checks the border path has been made
+    //return amount of border cells checked before path broken
+    public int CountBorderPath(EmptySpace es, Vector2Int pos)
+    {
+        int returnInt = 0;
+        
+        foreach (Vector2Int currBorderPoint in es.borderPath)
+        {
+            int tempX = pos.x + currBorderPoint.x;
+            int tempY = pos.y + currBorderPoint.y;
+
+            //if current point in border check path is not filled in some way, empty space cannot have been filled
+            if (state[tempX, tempY].type == Cell.Type.Empty)
+            {
+                //Debug.Log("current cell type: " + state[tempX, tempY].type);
+                //Debug.Log("there is a break in the border at position x: " + tempX + ", y: " + tempY);
+                break;
+            }
+
+            //Debug.Log("cell at position x: " + tempX + ", y: " + tempY + " is edge? " + state[tempX, tempY].isEdge + ", is filled? " + state[tempX, tempY].filled);
+            returnInt++;
+        }
+
+        return returnInt;
+    }
+    
     //checks if current empty space has been made
     public bool CheckIfEmptySpaceMade()
     {
         EmptySpace es = sm.currEmptySpace.GetComponent<EmptySpace>();
         //if (es) { Debug.Log("found current empty space script"); }
 
-        Debug.Log("es X bound: " + es.xBound + ", es Y above bound: " + es.yAboveBound + ", es below bound: " + es.yBelowBound);
+        //Debug.Log("es X bound: " + es.xBound + ", es Y above bound: " + es.yAboveBound + ", es below bound: " + es.yBelowBound);
         
         //iterate over board
         for(int x = 0; x < width; x++)
@@ -132,18 +185,18 @@ public class GameManager : MonoBehaviour
             //checks potential border position would be within bounds of board
             if (x + es.xBound > width) 
             {
-                Debug.Log("BREAKING: x would now be out of bounds when checking");
+                //Debug.Log("BREAKING: x would now be out of bounds when checking");
                 break; 
             }
 
             for (int y = 0; y < height; y++)
             {
-                Debug.Log("checking cell for empty at position x: " + x + ", y: " + y);
+                //Debug.Log("checking cell for empty at position x: " + x + ", y: " + y);
 
                 //checks potential border position would be within bounds of board
                 if (y - es.yBelowBound < 0 || y + es.yAboveBound > height) 
                 {
-                    Debug.Log("CONTINUING: y would now be out of bounds when checking");
+                    //Debug.Log("CONTINUING: y would now be out of bounds when checking");
                     continue; 
                 }
 
@@ -152,39 +205,30 @@ public class GameManager : MonoBehaviour
                 //skip checking edge or filled cells, as they cannot be empty space
                 if(currCell.isEdge || currCell.filled) 
                 {
-                    Debug.Log("CONTINUING: current cell is either edge or filled");
+                    //Debug.Log("CONTINUING: current cell is either edge or filled");
                     continue; 
+                }
+
+                //TODO: check empty space path is valid from current point
+                int emptiesChecked = CountSpacePath(es, x, y);
+
+                if (emptiesChecked != es.spacePath.Count)
+                {
+                    //Debug.Log("empty space cannot be made from current position");
+                    continue;
                 }
 
                 //set initial start point for checking border, x - 1 as always start checking to left of empty space
                 Vector2Int checkStartPos = new Vector2Int(x - 1, y);
-                Debug.Log("checking border start path at x: " + checkStartPos.x + ", y: " + checkStartPos.y);
+                //Debug.Log("checking border start path at x: " + checkStartPos.x + ", y: " + checkStartPos.y);
 
                 //temp int to see how many border cells have been checked
-                int bordersChecked = 0;
-
-                //loop over border path of empty space
-                foreach(Vector2Int currBorderPoint in es.borderPath)
-                {
-                    int tempX = checkStartPos.x + currBorderPoint.x;
-                    int tempY = checkStartPos.y + currBorderPoint.y;
-
-                    //if current point in border check path is not filled in some way, empty space cannot have been filled
-                    if (state[tempX, tempY].type == Cell.Type.Empty)
-                    {
-                        Debug.Log("current cell type: " + state[tempX, tempY].type);
-                        Debug.Log("there is a break in the border at position x: " + tempX + ", y: " + tempY);
-                        break;
-                    }
-
-                    Debug.Log("cell at position x: " + tempX + ", y: " + tempY + " is edge? " + state[tempX, tempY].isEdge + ", is filled? " + state[tempX, tempY].filled);
-                    bordersChecked++;
-                }
+                int bordersChecked = CountBorderPath(es, checkStartPos);
 
                 //if amount of borders checked == border path count without breaking, means entire border is filled, and empty space has been made
                 if(bordersChecked == es.borderPath.Count)
                 {
-                    Debug.Log("all borders checked, the empty space has successfully been made!");
+                    //Debug.Log("all borders checked, the empty space has successfully been made!");
                     return true;
                 }
             }
