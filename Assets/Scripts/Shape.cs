@@ -71,6 +71,18 @@ public class Shape : MonoBehaviour
     void OnMouseUp()
     {
         PlaceShape();
+
+        bool borderMade = gm.CheckIfEmptySpaceMade();
+        
+        if(borderMade)
+        {
+            Debug.Log("empty space has been made!");
+        }
+
+        else
+        {
+            Debug.Log("empty space not made");
+        }
     }
 
     private void PlaceShape()

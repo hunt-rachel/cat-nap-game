@@ -18,11 +18,6 @@ public class ShapeManager : MonoBehaviour
     public GameObject currEmptySpace; //the current negative space the player must try and make a border around
     public Vector3Int emptySpaceDisplayPos; //where to display the visualisation of the shape the player needs to make 
 
-    void Awake()
-    {
-        SetShapes();
-    }
-
     void Update()
     {
         //if no more playable shapes on screen, instantiate three more for player
@@ -30,9 +25,11 @@ public class ShapeManager : MonoBehaviour
         {
             SetShapes();
         }
+
+        //TODO: set new empty space if current one made
     }
 
-    private void SetShapes()
+    public void SetShapes()
     {
         //get unique random indexes to select shapes for player
         List<int> randIndices = new List<int>();
@@ -58,13 +55,13 @@ public class ShapeManager : MonoBehaviour
         }
     }
 
-    private void SetEmptySpace()
+    public void SetEmptySpace()
     {
         currEmptySpace = emptySpaces[Random.Range(0, emptySpaces.Count - 1)];
 
-        Instantiate(currEmptySpace);
-
         //TODO: make game object instance for display, and set position
+        GameObject emptyToMake = Instantiate(currEmptySpace);
+        emptyToMake.transform.position = emptySpaceDisplayPos;
 
     }
 }

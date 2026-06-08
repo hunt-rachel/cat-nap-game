@@ -99,6 +99,9 @@ MonoBehaviour:
   - {x: 1, y: 1}
   - {x: 2, y: 0}
   - {x: 1, y: -1}
+  xBound: 1
+  yAboveBound: 1
+  yBelowBound: 1
 --- !u!1 &4033389939380832764
 GameObject:
   m_ObjectHideFlags: 0

@@ -164,9 +164,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingShapePositions:
-  - {x: 15, y: 9, z: 0}
-  - {x: 15, y: 5, z: 0}
-  - {x: 15, y: 1, z: 0}
+  - {x: 13, y: 9, z: 0}
+  - {x: 13, y: 5, z: 0}
+  - {x: 13, y: 1, z: 0}
   playableShapes:
   - {fileID: 839584342760731446, guid: 706d7e104b737614c8728b669be916b8, type: 3}
   - {fileID: 839584342760731446, guid: e03222e76870177499b3e446263a4000, type: 3}
@@ -186,7 +186,7 @@ MonoBehaviour:
   - {fileID: 839584342760731446, guid: 6e2315d42c922b7428ab9651d9e5926b, type: 3}
   hardEmptySpaces: []
   currEmptySpace: {fileID: 0}
-  emptySpaceDisplayPos: {x: 0, y: 0, z: 0}
+  emptySpaceDisplayPos: {x: 20, y: 10, z: 0}
 --- !u!1 &319617077
 GameObject:
   m_ObjectHideFlags: 0
@@ -217,11 +217,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb7dd87be79fc7b4d8b2c756376bf639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 10
-  height: 10
+  width: 6
+  height: 6
   tilemap: {fileID: 2056839126}
   gameOver: 0
   canPlaceShape: 1
+  sm: {fileID: 284369013}
 --- !u!156049354 &319617079
 Grid:
   m_ObjectHideFlags: 0

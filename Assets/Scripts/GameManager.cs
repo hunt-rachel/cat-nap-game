@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     public bool gameOver; //bool for when no more actions can be taken in game
     public bool canPlaceShape = true; //when false, game over
 
+    public ShapeManager sm;
+
     //TODO: add game ui reference here when needed
 
     private void Awake()
@@ -54,6 +56,15 @@ public class GameManager : MonoBehaviour
         GenerateCells();
 
         board.DrawBoard(state);
+
+        //clear current shapes to place on board if any
+        if(sm.currPlayableShapes.Count > 0)
+        {
+            sm.currPlayableShapes.Clear();
+        } 
+        
+        sm.SetShapes();
+        sm.SetEmptySpace();
     }
 
     private void GenerateCells()
@@ -106,4 +117,81 @@ public class GameManager : MonoBehaviour
             return new Cell();
         }
     }
+
+    //checks if current empty space has been made
+    public bool CheckIfEmptySpaceMade()
+    {
+        EmptySpace es = sm.currEmptySpace.GetComponent<EmptySpace>();
+        //if (es) { Debug.Log("found current empty space script"); }
+
+        Debug.Log("es X bound: " + es.xBound + ", es Y above bound: " + es.yAboveBound + ", es below bound: " + es.yBelowBound);
+        
+        //iterate over board
+        for(int x = 0; x < width; x++)
+        {
+            //checks potential border position would be within bounds of board
+            if (x + es.xBound > width) 
+            {
+                Debug.Log("BREAKING: x would now be out of bounds when checking");
+                break; 
+            }
+
+            for (int y = 0; y < height; y++)
+            {
+                Debug.Log("checking cell for empty at position x: " + x + ", y: " + y);
+
+                //checks potential border position would be within bounds of board
+                if (y - es.yBelowBound < 0 || y + es.yAboveBound > height) 
+                {
+                    Debug.Log("CONTINUING: y would now be out of bounds when checking");
+                    continue; 
+                }
+
+                Cell currCell = state[x, y];
+                
+                //skip checking edge or filled cells, as they cannot be empty space
+                if(currCell.isEdge || currCell.filled) 
+                {
+                    Debug.Log("CONTINUING: current cell is either edge or filled");
+                    continue; 
+                }
+
+                //set initial start point for checking border, x - 1 as always start checking to left of empty space
+                Vector2Int checkStartPos = new Vector2Int(x - 1, y);
+                Debug.Log("checking border start path at x: " + checkStartPos.x + ", y: " + checkStartPos.y);
+
+                //temp int to see how many border cells have been checked
+                int bordersChecked = 0;
+
+                //loop over border path of empty space
+                foreach(Vector2Int currBorderPoint in es.borderPath)
+                {
+                    int tempX = checkStartPos.x + currBorderPoint.x;
+                    int tempY = checkStartPos.y + currBorderPoint.y;
+
+                    //if current point in border check path is not filled in some way, empty space cannot have been filled
+                    if (state[tempX, tempY].type == Cell.Type.Empty)
+                    {
+                        Debug.Log("current cell type: " + state[tempX, tempY].type);
+                        Debug.Log("there is a break in the border at position x: " + tempX + ", y: " + tempY);
+                        break;
+                    }
+
+                    Debug.Log("cell at position x: " + tempX + ", y: " + tempY + " is edge? " + state[tempX, tempY].isEdge + ", is filled? " + state[tempX, tempY].filled);
+                    bordersChecked++;
+                }
+
+                //if amount of borders checked == border path count without breaking, means entire border is filled, and empty space has been made
+                if(bordersChecked == es.borderPath.Count)
+                {
+                    Debug.Log("all borders checked, the empty space has successfully been made!");
+                    return true;
+                }
+            }
+        }
+
+        //entire border was checked without any breaks, meaining empty space has been created
+        return false;
+    }
+
 }
