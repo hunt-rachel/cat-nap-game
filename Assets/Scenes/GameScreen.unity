@@ -220,7 +220,39 @@ MonoBehaviour:
   - {fileID: 839584342760731446, guid: 6e2315d42c922b7428ab9651d9e5926b, type: 3}
   - {fileID: 839584342760731446, guid: 7931a559e45a8534898c0a40c1b434f0, type: 3}
   - {fileID: 839584342760731446, guid: df700d72d8a1cd54cb3b2be7c03a2c0d, type: 3}
-  hardEmptySpaces: []
+  - {fileID: 839584342760731446, guid: 07b313c114f47f24582a18cea16d2ea9, type: 3}
+  - {fileID: 839584342760731446, guid: 3d0abe66423622f4cb9208aa4ffd54fe, type: 3}
+  - {fileID: 839584342760731446, guid: 5215be15ec6adde4494bcf3eb23eac10, type: 3}
+  - {fileID: 839584342760731446, guid: 8e290bd40606d8b429167ccb1659f446, type: 3}
+  - {fileID: 839584342760731446, guid: 7467cb205a6b00b49a301424866e2800, type: 3}
+  - {fileID: 839584342760731446, guid: bba507cdb2e5cf94d9e1b3c267bea3f0, type: 3}
+  mediumEmptySpaces:
+  - {fileID: 839584342760731446, guid: b47ed8dd842ddb949b1351c740879a21, type: 3}
+  - {fileID: 839584342760731446, guid: be35e72560da43f46a54b91d278e58e8, type: 3}
+  - {fileID: 839584342760731446, guid: 2d51db7878d0b1c4585dbb748302997c, type: 3}
+  - {fileID: 839584342760731446, guid: 20603dece62d9f74a8650d53a4b46aa3, type: 3}
+  - {fileID: 839584342760731446, guid: 7a7decb8a10e6ae4e8c994cad286c492, type: 3}
+  - {fileID: 839584342760731446, guid: 65180160ec0932f40bebc841aa9ab91f, type: 3}
+  - {fileID: 839584342760731446, guid: 654b81e9d7b3a654d8aafbf5f0c167df, type: 3}
+  - {fileID: 839584342760731446, guid: 80be4b9976f5cdd4e93f566dd1bba92e, type: 3}
+  - {fileID: 839584342760731446, guid: 9dca0192e2e4e154f99570685e46242e, type: 3}
+  - {fileID: 839584342760731446, guid: 8e74f3f9490497749a2eaeabbff42336, type: 3}
+  - {fileID: 839584342760731446, guid: 01da77d5db193d44db929be0203c07ca, type: 3}
+  - {fileID: 839584342760731446, guid: e02177baeb87b844a8c350bb207f079e, type: 3}
+  - {fileID: 839584342760731446, guid: 3b50fde182b89304c96649b32f498109, type: 3}
+  hardEmptySpaces:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   emptySpaceHolder: {fileID: 2042496591}
   currEmptySpace: {fileID: 0}
   emptySpaceDisplayPos: {x: 20, y: 10, z: 0}
@@ -254,8 +286,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb7dd87be79fc7b4d8b2c756376bf639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 6
-  height: 6
+  width: 10
+  height: 10
   tilemap: {fileID: 2056839126}
   gameOver: 0
   canPlaceShape: 1

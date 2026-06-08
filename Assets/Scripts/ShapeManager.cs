@@ -14,7 +14,8 @@ public class ShapeManager : MonoBehaviour
     public List<GameObject> currPlayableShapes;
 
     public List<GameObject> emptySpaces; //shapes that are the negative space the players must try and make borders around
-    public List<GameObject> hardEmptySpaces; //shapes that will be added to empty spaces once player reaches a certain score
+    public List<GameObject> mediumEmptySpaces; //shapes that will be added to empty spaces once player reaches a certain score
+    public List<GameObject> hardEmptySpaces; //shapes that will be added to empty spaces once player reaches a certain, higher score
     public GameObject emptySpaceHolder;
 
     public GameObject currEmptySpace; //the current negative space the player must try and make a border around
