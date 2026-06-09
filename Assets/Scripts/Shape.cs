@@ -26,7 +26,7 @@ public class Shape : MonoBehaviour
         gm = GameObject.Find("Game Board Grid").GetComponent<GameManager>();
         //if (gm) { Debug.Log("found the game manager script"); }
 
-        sm = GameObject.Find("Shapes To Place").GetComponent<ShapeManager>();
+        sm = GameObject.Find("Shapes Manager").GetComponent<ShapeManager>();
         //if (sm) { Debug.Log("found shape manager"); }
     }
 
@@ -71,6 +71,20 @@ public class Shape : MonoBehaviour
     void OnMouseUp()
     {
         PlaceShape();
+
+        bool borderMade = gm.CheckIfEmptySpaceMade();
+        
+        if(borderMade)
+        {
+            Debug.Log("empty space has been made!");
+        }
+
+        else
+        {
+            Debug.Log("empty space not made");
+        }
+
+        //TODO: use method to check if current empty space can be made at any point on board, if not, game over
     }
 
     private void PlaceShape()
@@ -102,7 +116,7 @@ public class Shape : MonoBehaviour
             board.DrawBoard(gm.state);
 
             //remove from current shapes list
-            sm.currShapes.Remove(this.gameObject);
+            sm.currPlayableShapes.Remove(this.gameObject);
 
             //get rid of block once placed
             Destroy(this.gameObject);
