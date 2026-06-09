@@ -12,6 +12,7 @@ public class Shape : MonoBehaviour
     private Board board;
     private GameManager gm;
     private ShapeManager sm;
+    private EmptySpace es;
 
     public Vector3Int startPos;
 
@@ -25,9 +26,14 @@ public class Shape : MonoBehaviour
         //if (board) { Debug.Log("found the board"); }
         gm = GameObject.Find("Game Board Grid").GetComponent<GameManager>();
         //if (gm) { Debug.Log("found the game manager script"); }
-
         sm = GameObject.Find("Shapes Manager").GetComponent<ShapeManager>();
         //if (sm) { Debug.Log("found shape manager"); }
+    }
+
+    private void Start()
+    {
+        es = sm.currEmptySpace.GetComponent<EmptySpace>();
+        //if (es) { Debug.Log("found empty shape script reference"); }
     }
 
     public void SetShapeFeatures()
@@ -72,19 +78,22 @@ public class Shape : MonoBehaviour
     {
         PlaceShape();
 
-        bool borderMade = gm.CheckIfEmptySpaceMade();
-        
-        if(borderMade)
+        //TODO: use method to check if current empty space can be made at any point on board, if not, game over
+        bool isGameOver = CheckIfGameOver();
+        if(isGameOver)
         {
-            Debug.Log("empty space has been made!");
+            gm.gameOver = true;
         }
 
         else
         {
-            Debug.Log("empty space not made");
-        }
+            bool borderMade = gm.CheckIfEmptySpaceMade();
 
-        //TODO: use method to check if current empty space can be made at any point on board, if not, game over
+            if (borderMade)
+            {
+                Debug.Log("empty space has been made!");
+            }
+        }
     }
 
     private void PlaceShape()
@@ -159,6 +168,26 @@ public class Shape : MonoBehaviour
             }
         }
 
+        return true;
+    }
+
+    private bool CheckIfGameOver()
+    {
+        for(int x = 0; x < gm.width; x++)
+        {
+            for(int y = 0; y < gm.height; y++)
+            {
+                int emptiesChecked = gm.CountSpacePath(es, x, y);
+
+                if (emptiesChecked == es.spacePath.Count)
+                {
+                    return false;
+                }
+            }
+        }
+
+        Debug.Log("empty space cannot be made from current position");
+        //if empty space cannot be made anywhere on board, game over is true
         return true;
     }
 }

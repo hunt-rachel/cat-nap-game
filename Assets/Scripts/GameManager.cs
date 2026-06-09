@@ -39,10 +39,13 @@ public class GameManager : MonoBehaviour
             NewGame();
         }
 
-        else if(!gameOver)
+        else if(gameOver)
         {
-            //TODO: add mouse interaciton actions here. e.g. what happens when player clicks
+            Debug.Log("GAME OVER: no longer possible for empty space to be made");
+            NewGame();//temp to prevent infinite debug messages when game over
         }
+
+        //TODO: add mouse interaciton actions here. e.g. what happens when player clicks
     }
 
     //creates data for when player starts a new game
@@ -209,7 +212,7 @@ public class GameManager : MonoBehaviour
                     continue; 
                 }
 
-                //TODO: check empty space path is valid from current point
+                //check empty space path is valid from current point
                 int emptiesChecked = CountSpacePath(es, x, y);
 
                 if (emptiesChecked != es.spacePath.Count)
