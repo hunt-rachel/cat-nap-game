@@ -240,15 +240,17 @@ MonoBehaviour:
   - {fileID: 839584342760731446, guid: 01da77d5db193d44db929be0203c07ca, type: 3}
   - {fileID: 839584342760731446, guid: e02177baeb87b844a8c350bb207f079e, type: 3}
   - {fileID: 839584342760731446, guid: 3b50fde182b89304c96649b32f498109, type: 3}
+  - {fileID: 839584342760731446, guid: 2564fa4c130b7c24d905a1d2903224f7, type: 3}
+  - {fileID: 839584342760731446, guid: 8f502034b97396c41a0ca27dd3118f07, type: 3}
   hardEmptySpaces:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 839584342760731446, guid: c48e3be4f5570e640b02b8b07d75d788, type: 3}
+  - {fileID: 839584342760731446, guid: 5a2585e515219884a8c3849d8a839e50, type: 3}
+  - {fileID: 839584342760731446, guid: 6753da997de5b5d4aa8005e84f0a6b87, type: 3}
+  - {fileID: 839584342760731446, guid: 7ab271dba7ff835498baab49e97af116, type: 3}
+  - {fileID: 839584342760731446, guid: bb11ab8a7a8aed442bc6f931e2f94638, type: 3}
+  - {fileID: 839584342760731446, guid: bfa67cb570194e54bb688e3482551d0f, type: 3}
+  - {fileID: 839584342760731446, guid: c17d2e01483e74f438ea649069940264, type: 3}
+  - {fileID: 839584342760731446, guid: 43e13c9dabfa0914484923f79d34d45c, type: 3}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
