@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 525709159637358890}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1, y: 1, z: 0}
+  m_LocalPosition: {x: 1, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 6633689393639116842}
   - component: {fileID: 130682899369328398}
   m_Layer: 7
-  m_Name: 4_diagonal
+  m_Name: 4_diagonal_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -139,6 +139,20 @@ MonoBehaviour:
   startPos: {x: 15, y: 2, z: 0}
   squareSprite: {fileID: -6987706673233111111, guid: 545fb5cc287dd2f40a6cabf18066cee3, type: 3}
   shapeColour: {r: 0.9056604, g: 0.7132714, b: 0.55108577, a: 1}
+  canBePlaced: 1
+  rotationCount: 2
+  shapePath0Deg:
+  - {x: 0, y: 0}
+  - {x: 1, y: 0}
+  - {x: 2, y: -1}
+  - {x: 3, y: -1}
+  shapePath90Deg:
+  - {x: 0, y: 0}
+  - {x: 0, y: -1}
+  - {x: 1, y: 2}
+  - {x: 1, y: 1}
+  shapePath180Deg: []
+  shapePath270Deg: []
 --- !u!61 &6633689393639116842
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -219,7 +233,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.5, y: 1}
+  m_Offset: {x: 0.5, y: -1}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -257,7 +271,7 @@ Transform:
   m_GameObject: {fileID: 1371421468505048528}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

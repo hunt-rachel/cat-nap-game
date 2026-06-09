@@ -38,6 +38,8 @@ public class ShapeManager : MonoBehaviour
         }
 
         //TODO: set new empty space if current one made
+
+        //TODO: check if current shapes can be placed on board
     }
 
     public void SetShapes()

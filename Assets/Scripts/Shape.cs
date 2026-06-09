@@ -15,10 +15,27 @@ public class Shape : MonoBehaviour
     private EmptySpace es;
 
     public Vector3Int startPos;
+    [Space]
+    [Space]
 
     //TODO: replace with random background + select colour from colour pallete once artwork underway
     public Sprite squareSprite;
     public Color shapeColour;
+    [Space]
+    [Space]
+
+    public bool canBePlaced = true;
+    [Space]
+    [Space]
+
+    public int rotationCount; //how many variants of shape paths need to be stored
+    public List<List<Vector2Int>> shapePathsMaster; //coordinate +- ints here when checking
+
+    public List<Vector2Int> shapePath0Deg;
+    public List<Vector2Int> shapePath90Deg;
+    public List<Vector2Int> shapePath180Deg;
+    public List<Vector2Int> shapePath270Deg;
+
 
     private void Awake()
     {
@@ -78,8 +95,10 @@ public class Shape : MonoBehaviour
     {
         PlaceShape();
 
-        //TODO: use method to check if current empty space can be made at any point on board, if not, game over
-        bool isGameOver = CheckIfGameOver();
+        //TODO: check whether current shapes provided can be placed on board, if not, game over
+        
+        //checks if current empty space can be made at any point on board, if not, game over
+        bool isGameOver = CheckIfSpaceCanBeMade();
         if(isGameOver)
         {
             gm.gameOver = true;
@@ -171,11 +190,16 @@ public class Shape : MonoBehaviour
         return true;
     }
 
-    private bool CheckIfGameOver()
+    private bool CheckIfShapeCanBePlaced()
     {
-        for(int x = 0; x < gm.width; x++)
+        return true;
+    }
+    
+    private bool CheckIfSpaceCanBeMade()
+    {
+        for (int x = 0; x < gm.width; x++)
         {
-            for(int y = 0; y < gm.height; y++)
+            for (int y = 0; y < gm.height; y++)
             {
                 int emptiesChecked = gm.CountSpacePath(es, x, y);
 
@@ -186,7 +210,7 @@ public class Shape : MonoBehaviour
             }
         }
 
-        Debug.Log("empty space cannot be made from current position");
+        //Debug.Log("empty space cannot be made from current position");
         //if empty space cannot be made anywhere on board, game over is true
         return true;
     }
