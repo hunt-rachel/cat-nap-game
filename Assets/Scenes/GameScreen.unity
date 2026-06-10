@@ -288,14 +288,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb7dd87be79fc7b4d8b2c756376bf639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 10
-  height: 10
+  width: 6
+  height: 6
   tilemap: {fileID: 2056839126}
   gameOver: 0
-  canPlaceShape: 1
+  canPlaceAnyShape: 1
   sm: {fileID: 284369013}
   points: 0
-  pointsTxt: {fileID: 0}
+  pointsTxt: {fileID: 649232777}
 --- !u!156049354 &319617079
 Grid:
   m_ObjectHideFlags: 0

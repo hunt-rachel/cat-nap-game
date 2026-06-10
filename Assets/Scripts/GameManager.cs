@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Linq;
+using UnityEngine.UI;
 using TMPro;
 
 public class GameManager : MonoBehaviour
@@ -16,13 +17,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] public Cell[,] state;
 
     public bool gameOver; //bool for when no more actions can be taken in game
-    public bool canPlaceShape = true; //when false, game over
+    public bool canPlaceAnyShape = true; //when false, game over
 
     public ShapeManager sm;
 
     //TODO: add game ui reference here when needed
     [SerializeField] private int points = 0;
-    public TextMeshPro pointsTxt; 
+    public TMP_Text pointsTxt; 
 
     private void Awake()
     {
@@ -43,7 +44,13 @@ public class GameManager : MonoBehaviour
             NewGame();
         }
 
-        else if(gameOver)
+        if(!canPlaceAnyShape)
+        {
+            Debug.Log("can't place any of the playable shapes");
+            gameOver = true;
+        }
+
+        if(gameOver)
         {
             Debug.Log("GAME OVER");
             NewGame();//temp to prevent infinite debug messages when game over
@@ -59,6 +66,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("starting a new game!");
         gameOver = false;
+        canPlaceAnyShape = true;
 
         points = 0;
 

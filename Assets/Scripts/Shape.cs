@@ -65,6 +65,8 @@ public class Shape : MonoBehaviour
     {
         //TODO: check whether current shapes provided can be placed on board, if not, game over
         canBePlaced = CheckIfShapeCanBePlaced();
+
+        gm.canPlaceAnyShape = Convert.ToBoolean(Math.Min(Convert.ToInt32(gm.canPlaceAnyShape), Convert.ToInt32(canBePlaced)));
     }
 
     public void SetShapeFeatures()
