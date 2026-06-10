@@ -156,6 +156,9 @@ public class Shape : MonoBehaviour
                 gm.state[stateX, stateY].filled = true;
                 gm.state[stateX, stateY].type = Cell.Type.Filled;
             }
+
+            //increase score for every cell on board that becomes filled
+            gm.HandlePlacementScoring(cellsToFill.Count);
             
             board.DrawBoard(gm.state);
 

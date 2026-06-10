@@ -269,6 +269,11 @@ public class GameManager : MonoBehaviour
         return new Vector2Int(-1, -1);
     }
 
+    public void HandlePlacementScoring(int mult)
+    {
+        points += (mult * placedPointValue);
+    }
+    
     public void HandleBorderScoring(EmptySpace es, Vector2Int startPos)
     {
         Debug.Log("empty space has been made!");
