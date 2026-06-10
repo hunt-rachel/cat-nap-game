@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
             NewGame();
         }
 
+        //playable shapes presented are no longer able to be placed on board
         if(!canPlaceAnyShape)
         {
             Debug.Log("can't place any of the playable shapes");
@@ -69,6 +70,25 @@ public class GameManager : MonoBehaviour
             Debug.Log("GAME OVER");
             NewGame();//temp to prevent infinite debug messages when game over
         }
+
+        //add hard playable shapes to mix once player passes point threshold
+        if(sm.hardShapesAdded == false && points >= sm.hardShapePointThreshold)
+        {
+            sm.AddHardShapes();
+        }
+
+        //add medium empty spaces to mix once player passes point threshold
+        if (sm.mediumEmptyAdded == false && points >= sm.mediumEmptyPointThreshold)
+        {
+            sm.AddMediumEmptySpaces();
+        }
+
+        //add hard empty spaces to mix once player passes point threshold
+        if (sm.hardEmptyAdded == false && points >= sm.hardEmptyPointThreshold)
+        {
+            sm.AddHardEmptySpaces();
+        }
+
 
         pointsTxt.text = points.ToString();
     }
@@ -93,7 +113,12 @@ public class GameManager : MonoBehaviour
         if(sm.currPlayableShapes.Count > 0)
         {
             sm.currPlayableShapes.Clear();
-        } 
+        }
+
+        //remove harder shapes from empty spaces and playable shapes
+        sm.RemoveHardShapes();
+
+        sm.RemoveExtraEmptySpaces();
         
         sm.SetShapes();
         sm.SetEmptySpace();

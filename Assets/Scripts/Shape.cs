@@ -127,6 +127,9 @@ public class Shape : MonoBehaviour
             if (borderStartPos != new Vector2Int(-1, -1))
             {
                 gm.HandleBorderScoring(es, borderStartPos);
+
+                //call to set new empty space
+                sm.SetEmptySpace();
             }
         }
     }

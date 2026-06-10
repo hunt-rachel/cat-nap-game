@@ -15,6 +15,10 @@ public class ShapeManager : MonoBehaviour
     public GameObject playableShapesHolder;
     [Space]
     [Space]
+    public int hardShapePointThreshold;
+    public bool hardShapesAdded = false;
+    [Space]
+    [Space]
 
     public List<GameObject> currPlayableShapes;
     [Space]
@@ -24,6 +28,13 @@ public class ShapeManager : MonoBehaviour
     public List<GameObject> mediumEmptySpaces; //shapes that will be added to empty spaces once player reaches a certain score
     public List<GameObject> hardEmptySpaces; //shapes that will be added to empty spaces once player reaches a certain, higher score
     public GameObject emptySpaceHolder;
+    [Space]
+    [Space]
+    public int mediumEmptyPointThreshold;
+    public bool mediumEmptyAdded = false;
+
+    public int hardEmptyPointThreshold;
+    public bool hardEmptyAdded = false;
     [Space]
     [Space]
 
@@ -37,10 +48,6 @@ public class ShapeManager : MonoBehaviour
         {
             SetShapes();
         }
-
-        //TODO: set new empty space if current one made
-
-        //TODO: MAKE CODE FOR CHECKING IF SHAPE CAN BE PLACED     
     }
 
     public void SetShapes()
@@ -75,6 +82,51 @@ public class ShapeManager : MonoBehaviour
         }
     }
 
+    public void AddHardShapes()
+    {
+        playableShapes.AddRange(hardPlayableShapes);
+        hardShapesAdded = true;
+    }
+
+    public void RemoveHardShapes()
+    {
+        foreach(GameObject go in hardPlayableShapes)
+        {
+            playableShapes.Remove(go);
+        }
+
+        hardShapesAdded = false;
+    }
+
+    public void AddMediumEmptySpaces()
+    {
+        emptySpaces.AddRange(mediumEmptySpaces);
+        mediumEmptyAdded = true;
+    }
+
+    public void AddHardEmptySpaces()
+    {
+        emptySpaces.AddRange(hardEmptySpaces);
+        hardEmptyAdded = true;
+    }
+
+    public void RemoveExtraEmptySpaces()
+    {
+        foreach (GameObject go in mediumEmptySpaces)
+        {
+            emptySpaces.Remove(go);
+        }
+
+        mediumEmptyAdded = false;
+
+        foreach (GameObject go in hardEmptySpaces)
+        {
+            emptySpaces.Remove(go);
+        }
+
+        hardEmptyAdded = false;
+    }
+    
     public void SetEmptySpace()
     {
         //clear current empty space (if any) to allow for new one
