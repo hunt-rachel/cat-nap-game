@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System.Linq;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,6 +21,8 @@ public class GameManager : MonoBehaviour
     public ShapeManager sm;
 
     //TODO: add game ui reference here when needed
+    [SerializeField] private int points = 0;
+    public TextMeshPro pointsTxt; 
 
     private void Awake()
     {
@@ -41,9 +45,11 @@ public class GameManager : MonoBehaviour
 
         else if(gameOver)
         {
-            Debug.Log("GAME OVER: no longer possible for empty space to be made");
+            Debug.Log("GAME OVER");
             NewGame();//temp to prevent infinite debug messages when game over
         }
+
+        pointsTxt.text = points.ToString();
 
         //TODO: add mouse interaciton actions here. e.g. what happens when player clicks
     }
@@ -53,6 +59,8 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("starting a new game!");
         gameOver = false;
+
+        points = 0;
 
         state = new Cell[width, height];
 

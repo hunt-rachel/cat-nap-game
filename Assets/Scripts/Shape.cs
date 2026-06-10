@@ -29,12 +29,13 @@ public class Shape : MonoBehaviour
     [Space]
 
     public int rotationCount; //how many variants of shape paths need to be stored
-    public List<List<Vector2Int>> shapePathsMaster; //coordinate +- ints here when checking
 
     public List<Vector2Int> shapePath0Deg;
     public List<Vector2Int> shapePath90Deg;
     public List<Vector2Int> shapePath180Deg;
     public List<Vector2Int> shapePath270Deg;
+
+    public List<List<Vector2Int>> shapePathsMaster; //coordinate +- ints here when checking
 
 
     private void Awake()
@@ -51,6 +52,19 @@ public class Shape : MonoBehaviour
     {
         es = sm.currEmptySpace.GetComponent<EmptySpace>();
         //if (es) { Debug.Log("found empty shape script reference"); }
+
+        shapePathsMaster = new List<List<Vector2Int>>();
+
+        shapePathsMaster.Add(shapePath0Deg);
+        shapePathsMaster.Add(shapePath90Deg);
+        shapePathsMaster.Add(shapePath180Deg);
+        shapePathsMaster.Add(shapePath270Deg);
+    }
+
+    private void Update()
+    {
+        //TODO: check whether current shapes provided can be placed on board, if not, game over
+        canBePlaced = CheckIfShapeCanBePlaced();
     }
 
     public void SetShapeFeatures()
@@ -94,11 +108,10 @@ public class Shape : MonoBehaviour
     void OnMouseUp()
     {
         PlaceShape();
-
-        //TODO: check whether current shapes provided can be placed on board, if not, game over
         
         //checks if current empty space can be made at any point on board, if not, game over
         bool isGameOver = CheckIfSpaceCanBeMade();
+
         if(isGameOver)
         {
             gm.gameOver = true;
@@ -192,7 +205,55 @@ public class Shape : MonoBehaviour
 
     private bool CheckIfShapeCanBePlaced()
     {
-        return true;
+        for (int x = 0; x < gm.width; x++)
+        {
+            for(int y = 0; y < gm.height; y++)
+            {
+                List<int> pathsFromCurrPoint = new List<int>();
+                pathsFromCurrPoint = CheckShapeRotationPaths(x, y);
+
+                foreach(int i in pathsFromCurrPoint)
+                {
+                    
+                    //if there exists a path the same length as square count in shape (after having path checked), shape can be placed
+                    if(i == this.gameObject.transform.childCount)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        
+        //checked all paths, cannot be placed
+        return false;
+    }
+
+    private List<int> CheckShapeRotationPaths(int x, int y)
+    {
+        List<int> returnList = new List<int>();
+        
+        for(int i = 0; i < rotationCount; i++)
+        {
+            int returnInt = 0;
+
+            foreach (Vector2Int currPoint in shapePathsMaster[i])
+            {
+                int tempX = x + currPoint.x;
+                int tempY = y + currPoint.y;
+
+                //if current space not an empty space available for shape placement, shape cannot be placed starting at current point
+                if (gm.state[tempX, tempY].type != Cell.Type.Empty)
+                {
+                    break;
+                }
+
+                returnInt++;
+            }
+
+            returnList.Add(returnInt);
+        }
+
+        return returnList;
     }
     
     private bool CheckIfSpaceCanBeMade()

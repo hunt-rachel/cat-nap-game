@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ShapeManager : MonoBehaviour
@@ -39,7 +40,7 @@ public class ShapeManager : MonoBehaviour
 
         //TODO: set new empty space if current one made
 
-        //TODO: check if current shapes can be placed on board
+        //TODO: MAKE CODE FOR CHECKING IF SHAPE CAN BE PLACED     
     }
 
     public void SetShapes()
