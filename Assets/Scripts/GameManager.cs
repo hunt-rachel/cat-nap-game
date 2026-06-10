@@ -9,17 +9,31 @@ public class GameManager : MonoBehaviour
     //default board size, can be changed in inspector. includes edge rows and cols
     public int width;
     public int height;
+    [Space]
+    [Space]
 
     public Tilemap tilemap;
 
     private Board board;
+    [Space]
+    [Space]
 
     [SerializeField] public Cell[,] state;
 
     public bool gameOver; //bool for when no more actions can be taken in game
     public bool canPlaceAnyShape = true; //when false, game over
+    [Space]
+    [Space]
 
     public ShapeManager sm;
+    [Space]
+    [Space]
+
+    public int filledPointValue; //how much each filled square is worth when part of a successful border
+    public int edgePointValue; //how much each edge square is worth when part of a successful border - less than filled square as easier to make use of
+    public int placedPointValue; //how much each square in a shape is worth when placed on board
+    [Space]
+    [Space]
 
     //TODO: add game ui reference here when needed
     [SerializeField] private int points = 0;
@@ -57,8 +71,6 @@ public class GameManager : MonoBehaviour
         }
 
         pointsTxt.text = points.ToString();
-
-        //TODO: add mouse interaciton actions here. e.g. what happens when player clicks
     }
 
     //creates data for when player starts a new game
@@ -191,7 +203,7 @@ public class GameManager : MonoBehaviour
     }
     
     //checks if current empty space has been made
-    public bool CheckIfEmptySpaceMade()
+    public Vector2Int CheckIfEmptySpaceMade()
     {
         EmptySpace es = sm.currEmptySpace.GetComponent<EmptySpace>();
         //if (es) { Debug.Log("found current empty space script"); }
@@ -248,13 +260,41 @@ public class GameManager : MonoBehaviour
                 if(bordersChecked == es.borderPath.Count)
                 {
                     //Debug.Log("all borders checked, the empty space has successfully been made!");
-                    return true;
+                    return new Vector2Int(x,y);
                 }
             }
         }
 
         //entire border was checked without any breaks, meaining empty space has been created
-        return false;
+        return new Vector2Int(-1, -1);
+    }
+
+    public void HandleBorderScoring(EmptySpace es, Vector2Int startPos)
+    {
+        Debug.Log("empty space has been made!");
+
+        foreach(Vector2Int currBorderPoint in es.borderPath)
+        {
+            int tempX = (startPos.x - 1) + currBorderPoint.x;
+            int tempY = startPos.y + currBorderPoint.y;
+
+            if (state[tempX, tempY].type == Cell.Type.Filled)
+            {
+                points += filledPointValue;
+                state[tempX, tempY].type = Cell.Type.Empty;
+                state[tempX, tempY].filled = false;
+
+                Debug.Log("making cell at pos x: " + tempX + ", y: " + tempY + " empty");
+            }
+
+            else if(state[tempX, tempY].type == Cell.Type.Edge)
+            {
+                points += edgePointValue;
+            }
+        }
+
+        //TODO: add fun animation + visual signifier of what points player is earning for this
+        board.DrawBoard(state);
     }
 
 }

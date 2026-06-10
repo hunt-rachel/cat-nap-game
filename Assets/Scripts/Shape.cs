@@ -121,11 +121,12 @@ public class Shape : MonoBehaviour
 
         else
         {
-            bool borderMade = gm.CheckIfEmptySpaceMade();
+            //change to vector2int pos and (-1, -1) will represent false, num will represent coordinate to start border handling otherwise
+            Vector2Int borderStartPos = gm.CheckIfEmptySpaceMade();
 
-            if (borderMade)
+            if (borderStartPos != new Vector2Int(-1, -1))
             {
-                Debug.Log("empty space has been made!");
+                gm.HandleBorderScoring(es, borderStartPos);
             }
         }
     }
