@@ -213,8 +213,17 @@ MonoBehaviour:
   - {fileID: 839584342760731446, guid: 3f20e4290e7122749a72d15ef5a7ffc3, type: 3}
   - {fileID: 839584342760731446, guid: 8b9fe6167836a854fb37963464cafdf6, type: 3}
   - {fileID: 839584342760731446, guid: f00bbda0723571a46a40cd8dea94d7cb, type: 3}
-  hardPlayableShapes: []
+  hardPlayableShapes:
+  - {fileID: 839584342760731446, guid: 1227854aac949f348b558aaa38a17b98, type: 3}
+  - {fileID: 839584342760731446, guid: a044e8697cae7c448a55056f5bff8d80, type: 3}
+  - {fileID: 839584342760731446, guid: 2e37d1cef866f68468146883dd09d7f0, type: 3}
+  - {fileID: 839584342760731446, guid: 9193b5dc79abe9942915a15ff8abf5f0, type: 3}
+  - {fileID: 839584342760731446, guid: 32705191c15e1114490f01cd26298265, type: 3}
+  - {fileID: 839584342760731446, guid: 3ac264d31fe171548907380621ecf168, type: 3}
+  - {fileID: 839584342760731446, guid: 08e6f734c6381bd40814727defed0390, type: 3}
   playableShapesHolder: {fileID: 155034882}
+  hardShapePointThreshold: 5000
+  hardShapesAdded: 0
   currPlayableShapes: []
   emptySpaces:
   - {fileID: 839584342760731446, guid: 6e2315d42c922b7428ab9651d9e5926b, type: 3}
@@ -256,6 +265,10 @@ MonoBehaviour:
   - {fileID: 839584342760731446, guid: ffaae434bd85a0140a844d1b5a2e9593, type: 3}
   - {fileID: 839584342760731446, guid: e6c72ce2261da3f4682c8dd6f93dbbd8, type: 3}
   emptySpaceHolder: {fileID: 2042496591}
+  mediumEmptyPointThreshold: 5000
+  mediumEmptyAdded: 0
+  hardEmptyPointThreshold: 10000
+  hardEmptyAdded: 0
   currEmptySpace: {fileID: 0}
   emptySpaceDisplayPos: {x: 20, y: 10, z: 0}
 --- !u!1 &319617077

@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
 
@@ -203,9 +205,9 @@ public class GameManager : MonoBehaviour
 
     //checks the border path has been made
     //return amount of border cells checked before path broken
-    public int CountBorderPath(EmptySpace es, Vector2Int pos)
+    public List<Vector2Int> CountBorderPath(EmptySpace es, Vector2Int pos)
     {
-        int returnInt = 0;
+        List<Vector2Int> returnList = new List<Vector2Int>();
         
         foreach (Vector2Int currBorderPoint in es.borderPath)
         {
@@ -220,15 +222,17 @@ public class GameManager : MonoBehaviour
                 break;
             }
 
+            //TODO: figure out why coordinates breaking sometimes when scoring
+
             //Debug.Log("cell at position x: " + tempX + ", y: " + tempY + " is edge? " + state[tempX, tempY].isEdge + ", is filled? " + state[tempX, tempY].filled);
-            returnInt++;
+            returnList.Add(new Vector2Int(tempX, tempY));
         }
 
-        return returnInt;
+        return returnList;
     }
     
     //checks if current empty space has been made
-    public Vector2Int CheckIfEmptySpaceMade()
+    public List<Vector2Int> CheckIfEmptySpaceMade()
     {
         EmptySpace es = sm.currEmptySpace.GetComponent<EmptySpace>();
         //if (es) { Debug.Log("found current empty space script"); }
@@ -279,19 +283,19 @@ public class GameManager : MonoBehaviour
                 //Debug.Log("checking border start path at x: " + checkStartPos.x + ", y: " + checkStartPos.y);
 
                 //temp int to see how many border cells have been checked
-                int bordersChecked = CountBorderPath(es, checkStartPos);
+                List<Vector2Int> borderList = CountBorderPath(es, checkStartPos);
 
                 //if amount of borders checked == border path count without breaking, means entire border is filled, and empty space has been made
-                if(bordersChecked == es.borderPath.Count)
+                if(borderList.Count == es.borderPath.Count)
                 {
                     //Debug.Log("all borders checked, the empty space has successfully been made!");
-                    return new Vector2Int(x,y);
+                    return borderList;
                 }
             }
         }
 
         //entire border was checked without any breaks, meaining empty space has been created
-        return new Vector2Int(-1, -1);
+        return new List<Vector2Int>();
     }
 
     public void HandlePlacementScoring(int mult)
@@ -299,14 +303,23 @@ public class GameManager : MonoBehaviour
         points += (mult * placedPointValue);
     }
     
-    public void HandleBorderScoring(EmptySpace es, Vector2Int startPos)
+    public void HandleBorderScoring(EmptySpace es, List<Vector2Int> borderPosList)
     {
-        Debug.Log("empty space has been made!");
+        Debug.Log("empty space has been made! starting position in grid is x: " + (borderPosList[0].x + 1) + ", y: " + borderPosList[0].y);
 
-        foreach(Vector2Int currBorderPoint in es.borderPath)
+        /*foreach(Vector2Int currBorderPoint in es.borderPath)
         {
-            int tempX = (startPos.x - 1) + currBorderPoint.x;
+            int tempX = startPos.x + currBorderPoint.x;
             int tempY = startPos.y + currBorderPoint.y;
+
+            //temp fix until can find problem
+            if (tempY == -1)
+            {
+                tempY = 0;
+                Debug.Log("overridden tempY to equal 0, not -1");
+            }
+
+            Debug.Log("temp x: " + tempX + ", temp y: " + tempY);
 
             if (state[tempX, tempY].type == Cell.Type.Filled)
             {
@@ -319,11 +332,32 @@ public class GameManager : MonoBehaviour
 
             else if(state[tempX, tempY].type == Cell.Type.Edge)
             {
+                Debug.Log("scoring edge tile at pos x: " + tempX + ", y: " + tempY);
+                points += edgePointValue;
+            }
+
+        }
+
+        //TODO: add fun animation + visual signifier of what points player is earning for this
+        board.DrawBoard(state);*/
+
+        foreach(Vector2Int pos in borderPosList)
+        {
+            if (state[pos.x, pos.y].type == Cell.Type.Filled)
+            {
+                points += filledPointValue;
+                state[pos.x, pos.y].type = Cell.Type.Empty;
+                state[pos.x, pos.y].filled = false;
+                Debug.Log("making cell at pos x: " + pos.x + ", y: " + pos.y + " empty");
+            }
+
+            else
+            {
+                Debug.Log("scoring edge tile at pos x: " + pos.x + ", y: " + pos.y);
                 points += edgePointValue;
             }
         }
 
-        //TODO: add fun animation + visual signifier of what points player is earning for this
         board.DrawBoard(state);
     }
 
