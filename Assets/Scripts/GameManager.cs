@@ -222,8 +222,6 @@ public class GameManager : MonoBehaviour
                 break;
             }
 
-            //TODO: figure out why coordinates breaking sometimes when scoring
-
             //Debug.Log("cell at position x: " + tempX + ", y: " + tempY + " is edge? " + state[tempX, tempY].isEdge + ", is filled? " + state[tempX, tempY].filled);
             returnList.Add(new Vector2Int(tempX, tempY));
         }
@@ -306,40 +304,6 @@ public class GameManager : MonoBehaviour
     public void HandleBorderScoring(EmptySpace es, List<Vector2Int> borderPosList)
     {
         Debug.Log("empty space has been made! starting position in grid is x: " + (borderPosList[0].x + 1) + ", y: " + borderPosList[0].y);
-
-        /*foreach(Vector2Int currBorderPoint in es.borderPath)
-        {
-            int tempX = startPos.x + currBorderPoint.x;
-            int tempY = startPos.y + currBorderPoint.y;
-
-            //temp fix until can find problem
-            if (tempY == -1)
-            {
-                tempY = 0;
-                Debug.Log("overridden tempY to equal 0, not -1");
-            }
-
-            Debug.Log("temp x: " + tempX + ", temp y: " + tempY);
-
-            if (state[tempX, tempY].type == Cell.Type.Filled)
-            {
-                points += filledPointValue;
-                state[tempX, tempY].type = Cell.Type.Empty;
-                state[tempX, tempY].filled = false;
-
-                Debug.Log("making cell at pos x: " + tempX + ", y: " + tempY + " empty");
-            }
-
-            else if(state[tempX, tempY].type == Cell.Type.Edge)
-            {
-                Debug.Log("scoring edge tile at pos x: " + tempX + ", y: " + tempY);
-                points += edgePointValue;
-            }
-
-        }
-
-        //TODO: add fun animation + visual signifier of what points player is earning for this
-        board.DrawBoard(state);*/
 
         foreach(Vector2Int pos in borderPosList)
         {
