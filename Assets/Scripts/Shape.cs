@@ -121,11 +121,14 @@ public class Shape : MonoBehaviour
 
         else
         {
-            bool borderMade = gm.CheckIfEmptySpaceMade();
+            List<Vector2Int> bordersToCheckList = gm.CheckIfEmptySpaceMade();
 
-            if (borderMade)
+            if(bordersToCheckList.Count != 0)
             {
-                Debug.Log("empty space has been made!");
+                gm.HandleBorderScoring(es, bordersToCheckList);
+
+                //call to set new empty space
+                sm.SetEmptySpace();
             }
         }
     }
@@ -155,6 +158,9 @@ public class Shape : MonoBehaviour
                 gm.state[stateX, stateY].filled = true;
                 gm.state[stateX, stateY].type = Cell.Type.Filled;
             }
+
+            //increase score for every cell on board that becomes filled
+            gm.HandlePlacementScoring(cellsToFill.Count);
             
             board.DrawBoard(gm.state);
 

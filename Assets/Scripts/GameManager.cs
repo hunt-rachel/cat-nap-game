@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
 
@@ -9,17 +11,31 @@ public class GameManager : MonoBehaviour
     //default board size, can be changed in inspector. includes edge rows and cols
     public int width;
     public int height;
+    [Space]
+    [Space]
 
     public Tilemap tilemap;
 
     private Board board;
+    [Space]
+    [Space]
 
     [SerializeField] public Cell[,] state;
 
     public bool gameOver; //bool for when no more actions can be taken in game
     public bool canPlaceAnyShape = true; //when false, game over
+    [Space]
+    [Space]
 
     public ShapeManager sm;
+    [Space]
+    [Space]
+
+    public int filledPointValue; //how much each filled square is worth when part of a successful border
+    public int edgePointValue; //how much each edge square is worth when part of a successful border - less than filled square as easier to make use of
+    public int placedPointValue; //how much each square in a shape is worth when placed on board
+    [Space]
+    [Space]
 
     //TODO: add game ui reference here when needed
     [SerializeField] private int points = 0;
@@ -44,6 +60,7 @@ public class GameManager : MonoBehaviour
             NewGame();
         }
 
+        //playable shapes presented are no longer able to be placed on board
         if(!canPlaceAnyShape)
         {
             Debug.Log("can't place any of the playable shapes");
@@ -56,9 +73,26 @@ public class GameManager : MonoBehaviour
             NewGame();//temp to prevent infinite debug messages when game over
         }
 
-        pointsTxt.text = points.ToString();
+        //add hard playable shapes to mix once player passes point threshold
+        if(sm.hardShapesAdded == false && points >= sm.hardShapePointThreshold)
+        {
+            sm.AddHardShapes();
+        }
 
-        //TODO: add mouse interaciton actions here. e.g. what happens when player clicks
+        //add medium empty spaces to mix once player passes point threshold
+        if (sm.mediumEmptyAdded == false && points >= sm.mediumEmptyPointThreshold)
+        {
+            sm.AddMediumEmptySpaces();
+        }
+
+        //add hard empty spaces to mix once player passes point threshold
+        if (sm.hardEmptyAdded == false && points >= sm.hardEmptyPointThreshold)
+        {
+            sm.AddHardEmptySpaces();
+        }
+
+
+        pointsTxt.text = points.ToString();
     }
 
     //creates data for when player starts a new game
@@ -81,7 +115,12 @@ public class GameManager : MonoBehaviour
         if(sm.currPlayableShapes.Count > 0)
         {
             sm.currPlayableShapes.Clear();
-        } 
+        }
+
+        //remove harder shapes from empty spaces and playable shapes
+        sm.RemoveHardShapes();
+
+        sm.RemoveExtraEmptySpaces();
         
         sm.SetShapes();
         sm.SetEmptySpace();
@@ -166,9 +205,9 @@ public class GameManager : MonoBehaviour
 
     //checks the border path has been made
     //return amount of border cells checked before path broken
-    public int CountBorderPath(EmptySpace es, Vector2Int pos)
+    public List<Vector2Int> CountBorderPath(EmptySpace es, Vector2Int pos)
     {
-        int returnInt = 0;
+        List<Vector2Int> returnList = new List<Vector2Int>();
         
         foreach (Vector2Int currBorderPoint in es.borderPath)
         {
@@ -184,14 +223,14 @@ public class GameManager : MonoBehaviour
             }
 
             //Debug.Log("cell at position x: " + tempX + ", y: " + tempY + " is edge? " + state[tempX, tempY].isEdge + ", is filled? " + state[tempX, tempY].filled);
-            returnInt++;
+            returnList.Add(new Vector2Int(tempX, tempY));
         }
 
-        return returnInt;
+        return returnList;
     }
     
     //checks if current empty space has been made
-    public bool CheckIfEmptySpaceMade()
+    public List<Vector2Int> CheckIfEmptySpaceMade()
     {
         EmptySpace es = sm.currEmptySpace.GetComponent<EmptySpace>();
         //if (es) { Debug.Log("found current empty space script"); }
@@ -242,19 +281,48 @@ public class GameManager : MonoBehaviour
                 //Debug.Log("checking border start path at x: " + checkStartPos.x + ", y: " + checkStartPos.y);
 
                 //temp int to see how many border cells have been checked
-                int bordersChecked = CountBorderPath(es, checkStartPos);
+                List<Vector2Int> borderList = CountBorderPath(es, checkStartPos);
 
                 //if amount of borders checked == border path count without breaking, means entire border is filled, and empty space has been made
-                if(bordersChecked == es.borderPath.Count)
+                if(borderList.Count == es.borderPath.Count)
                 {
                     //Debug.Log("all borders checked, the empty space has successfully been made!");
-                    return true;
+                    return borderList;
                 }
             }
         }
 
         //entire border was checked without any breaks, meaining empty space has been created
-        return false;
+        return new List<Vector2Int>();
+    }
+
+    public void HandlePlacementScoring(int mult)
+    {
+        points += (mult * placedPointValue);
+    }
+    
+    public void HandleBorderScoring(EmptySpace es, List<Vector2Int> borderPosList)
+    {
+        Debug.Log("empty space has been made! starting position in grid is x: " + (borderPosList[0].x + 1) + ", y: " + borderPosList[0].y);
+
+        foreach(Vector2Int pos in borderPosList)
+        {
+            if (state[pos.x, pos.y].type == Cell.Type.Filled)
+            {
+                points += filledPointValue;
+                state[pos.x, pos.y].type = Cell.Type.Empty;
+                state[pos.x, pos.y].filled = false;
+                Debug.Log("making cell at pos x: " + pos.x + ", y: " + pos.y + " empty");
+            }
+
+            else
+            {
+                Debug.Log("scoring edge tile at pos x: " + pos.x + ", y: " + pos.y);
+                points += edgePointValue;
+            }
+        }
+
+        board.DrawBoard(state);
     }
 
 }

@@ -213,8 +213,17 @@ MonoBehaviour:
   - {fileID: 839584342760731446, guid: 3f20e4290e7122749a72d15ef5a7ffc3, type: 3}
   - {fileID: 839584342760731446, guid: 8b9fe6167836a854fb37963464cafdf6, type: 3}
   - {fileID: 839584342760731446, guid: f00bbda0723571a46a40cd8dea94d7cb, type: 3}
-  hardPlayableShapes: []
+  hardPlayableShapes:
+  - {fileID: 839584342760731446, guid: 1227854aac949f348b558aaa38a17b98, type: 3}
+  - {fileID: 839584342760731446, guid: a044e8697cae7c448a55056f5bff8d80, type: 3}
+  - {fileID: 839584342760731446, guid: 2e37d1cef866f68468146883dd09d7f0, type: 3}
+  - {fileID: 839584342760731446, guid: 9193b5dc79abe9942915a15ff8abf5f0, type: 3}
+  - {fileID: 839584342760731446, guid: 32705191c15e1114490f01cd26298265, type: 3}
+  - {fileID: 839584342760731446, guid: 3ac264d31fe171548907380621ecf168, type: 3}
+  - {fileID: 839584342760731446, guid: 08e6f734c6381bd40814727defed0390, type: 3}
   playableShapesHolder: {fileID: 155034882}
+  hardShapePointThreshold: 5000
+  hardShapesAdded: 0
   currPlayableShapes: []
   emptySpaces:
   - {fileID: 839584342760731446, guid: 6e2315d42c922b7428ab9651d9e5926b, type: 3}
@@ -256,6 +265,10 @@ MonoBehaviour:
   - {fileID: 839584342760731446, guid: ffaae434bd85a0140a844d1b5a2e9593, type: 3}
   - {fileID: 839584342760731446, guid: e6c72ce2261da3f4682c8dd6f93dbbd8, type: 3}
   emptySpaceHolder: {fileID: 2042496591}
+  mediumEmptyPointThreshold: 5000
+  mediumEmptyAdded: 0
+  hardEmptyPointThreshold: 10000
+  hardEmptyAdded: 0
   currEmptySpace: {fileID: 0}
   emptySpaceDisplayPos: {x: 20, y: 10, z: 0}
 --- !u!1 &319617077
@@ -288,12 +301,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb7dd87be79fc7b4d8b2c756376bf639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 6
-  height: 6
+  width: 10
+  height: 10
   tilemap: {fileID: 2056839126}
   gameOver: 0
   canPlaceAnyShape: 1
   sm: {fileID: 284369013}
+  filledPointValue: 100
+  edgePointValue: 50
+  placedPointValue: 10
   points: 0
   pointsTxt: {fileID: 649232777}
 --- !u!156049354 &319617079
@@ -647,7 +663,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 688, y: -515}
+  m_AnchoredPosition: {x: 705, y: -515}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &649232777
