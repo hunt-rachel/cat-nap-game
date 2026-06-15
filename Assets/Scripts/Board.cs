@@ -41,6 +41,8 @@ public class Board : MonoBehaviour
         //filled cell - shape has been placed over tile
         if(cell.filled)
         {
+            //matches filled cell colour to placed shape colour
+            tileFilled.color = cell.colour;
             return tileFilled;
         }
 

@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startPos: {x: 15, y: 2, z: 0}
-  squareSprite: {fileID: -6987706673233111111, guid: 545fb5cc287dd2f40a6cabf18066cee3, type: 3}
+  squareSprite: {fileID: -9211880014604033096, guid: 039b9b224b91b1b4abf4052b39a7386d, type: 3}
   shapeColour: {r: 0.9056604, g: 0.7132714, b: 0.55108577, a: 1}
   canBePlaced: 1
   rotationCount: 2

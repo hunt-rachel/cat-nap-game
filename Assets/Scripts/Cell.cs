@@ -15,6 +15,7 @@ public struct Cell
 
     public Vector3Int pos;
     public Type type;
+    public Color colour;
 
     public bool filled;
     public bool isEdge;

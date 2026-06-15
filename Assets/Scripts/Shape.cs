@@ -112,6 +112,8 @@ public class Shape : MonoBehaviour
         PlaceShape();
         
         //checks if current empty space can be made at any point on board, if not, game over
+        //TODO: check this works under all circumstances
+        //maybe add while loop in setting empty space, while it cannot be placed, set until once can
         bool isGameOver = CheckIfSpaceCanBeMade();
 
         if(isGameOver)
@@ -155,7 +157,10 @@ public class Shape : MonoBehaviour
                 int stateX = cellsToFill[i].pos.x;
                 int stateY = cellsToFill[i].pos.y;
 
+                //set status to filled
                 gm.state[stateX, stateY].filled = true;
+                //match filled cell colour to placed shape colour
+                gm.state[stateX, stateY].colour = shapeColour;
                 gm.state[stateX, stateY].type = Cell.Type.Filled;
             }
 
