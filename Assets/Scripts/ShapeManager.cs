@@ -21,6 +21,7 @@ public class ShapeManager : MonoBehaviour
     [Space]
 
     public List<GameObject> currPlayableShapes;
+    public List<Color> coloursList;
     [Space]
     [Space]
 
@@ -75,8 +76,11 @@ public class ShapeManager : MonoBehaviour
         {
             GameObject newShape = Instantiate(playableShapes[randIndices[i]], playableShapesHolder.transform);
 
-            newShape.GetComponent<Shape>().startPos = startingShapePositions[i];
-            newShape.GetComponent<Shape>().SetShapeFeatures();
+            Shape nsShape = newShape.GetComponent<Shape>();
+            
+            nsShape.startPos = startingShapePositions[i];
+            nsShape.shapeColour = coloursList[Random.Range(0, coloursList.Count - 1)];
+            nsShape.SetShapeFeatures();
 
             currPlayableShapes.Add(newShape);
         }
