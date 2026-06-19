@@ -39,7 +39,10 @@ public class GameManager : MonoBehaviour
 
     //TODO: add game ui reference here when needed
     [SerializeField] private int points = 0;
-    public TMP_Text pointsTxt; 
+    public TMP_Text pointsTxt;
+
+    [SerializeField] private int prevHighScore = 0; //previous high score variable to compare with current score for setting new high score
+    public TMP_Text highScoreTxt;
 
     private void Awake()
     {
@@ -57,6 +60,7 @@ public class GameManager : MonoBehaviour
         //TODO: make mobile friendly input when desktop version complete
         if(Input.GetKeyDown(KeyCode.R))
         {
+            SaveHighScore();
             NewGame();
         }
 
@@ -70,6 +74,10 @@ public class GameManager : MonoBehaviour
         if(gameOver)
         {
             Debug.Log("GAME OVER");
+
+            //set new high score if current score higher than high score
+            SaveHighScore();
+
             NewGame();//temp to prevent infinite debug messages when game over
         }
 
@@ -93,8 +101,35 @@ public class GameManager : MonoBehaviour
 
 
         pointsTxt.text = points.ToString();
+
+        //if current points is higher than previous high score, high score is now current points
+        if(prevHighScore < points)
+        {
+            highScoreTxt.text = pointsTxt.text;
+        }
     }
 
+    void OnApplicationQuit()
+    {
+        SaveHighScore();
+        Debug.Log("game ending after " + Time.time + " seconds.");
+    }
+    
+    //saves high score to player prefs
+    private void SaveHighScore()
+    {
+        if(points > prevHighScore)
+        {
+            PlayerPrefs.SetInt("HighScore", points);
+        }
+    }
+    
+    //gets high score from player prefs
+    private int GetHighScore()
+    {
+        return PlayerPrefs.GetInt("HighScore");
+    }
+    
     //creates data for when player starts a new game
     private void NewGame()
     {
@@ -103,6 +138,8 @@ public class GameManager : MonoBehaviour
         canPlaceAnyShape = true;
 
         points = 0;
+        prevHighScore = GetHighScore();
+        highScoreTxt.text = prevHighScore.ToString();
 
         state = new Cell[width, height];
 
